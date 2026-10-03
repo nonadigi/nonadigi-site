@@ -52,7 +52,7 @@ window.NONADIGI_FORMSPREE = "https://formspree.io/f/mqparozk";
     input.value = '';
     setTimeout(function(){ reply(text); }, 300);
   }
-  function prices(){ return '<strong>Every project starts with a free audit — then we quote a simple setup + monthly plan. Founding clients lock their rate for life.'; }
+  function prices(){ return '<strong>Every project starts with a free audit — then we quote a simple setup + monthly plan. Founding clients lock their rate for 12 months.'; }
 
   function reply(raw){
     var q = raw.toLowerCase();
