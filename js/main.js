@@ -6,7 +6,7 @@
 // https://formspree.io, make a form, and paste the endpoint URL here,
 // e.g. window.NONADIGI_FORMSPREE = "https://formspree.io/f/xabc1234";
 // Leave empty to keep the form in demo mode (shows success UI only).
-window.NONADIGI_FORMSPREE = "";
+window.NONADIGI_FORMSPREE = "https://formspree.io/f/mqparozk";
 
 
 
