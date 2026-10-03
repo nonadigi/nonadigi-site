@@ -52,7 +52,7 @@ window.NONADIGI_FORMSPREE = "https://formspree.io/f/mqparozk";
     input.value = '';
     setTimeout(function(){ reply(text); }, 300);
   }
-  function prices(){ return '<strong>Every project starts with a free audit — then we quote a simple setup + monthly plan. Founding clients lock their rate for 12 months.'; }
+  function prices(){ return '<strong>AI Receptionist</strong> — <s>Standard: $1,200 setup + $299/mo</s><br><strong>Founding (after 40% discount): $720 setup + $179/mo</strong><br><br><strong>AI Visibility Engine</strong> — <s>Standard: $900/mo</s><br><strong>Founding (after 40% discount): $540/mo</strong><br><span style="font-size:12px">Founding rates locked for 12 months.</span>'; }
 
   function reply(raw){
     var q = raw.toLowerCase();
@@ -83,7 +83,7 @@ window.NONADIGI_FORMSPREE = "https://formspree.io/f/mqparozk";
     }
     if (q.indexOf('audit') > -1 || q.indexOf('report') > -1){ req = {}; state = 'await_audit_biz'; botSay('Love it — the audit is the best place to start. What\'s your business name?'); return; }
     if (q.indexOf('price') > -1 || q.indexOf('pricing') > -1 || q.indexOf('cost') > -1 || q.indexOf('much') > -1){
-      botSay('Here\'s how pricing works:<br>' + prices() + '<br><br>Want the free audit to see which fit is right for you?', ['Get my free audit', "I'm good"]); return;
+      botSay('Pricing — founding prices are already after the 40% discount:<br><br>' + prices() + '<br><br>Want the free audit to see which fit is right for you?', ['Get my free audit', "I'm good"]); return;
     }
     if (q.indexOf('service') > -1 || q.indexOf('offer') > -1 || q.indexOf('what do you do') > -1){
       botSay('Two offers, done properly:<br><br><strong>AI Receptionist</strong> — a 24/7 AI front desk for your website. Answers, qualifies, books while you sleep.<br><br><strong>AI Visibility Engine</strong> — become the business ChatGPT, Gemini and Perplexity recommend.', ['Get my free audit', 'How does it work?']); return;
