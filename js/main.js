@@ -168,6 +168,8 @@ document.getElementById('auditForm').addEventListener('submit', function(e){
   try {
     if (window.NONADIGI_FORMSPREE) {
       var payload = { name: name, business: biz, website: web, email: em,
+        _replyto: em,
+        _subject: (claimMode ? 'Founding slot ' + claimSlot + ' hold' : 'Free audit request') + ' — ' + biz,
         request: claimMode ? ('Founding slot ' + claimSlot + ' of 3') : 'Free AI visibility audit',
         page: location.href };
       if (navigator.sendBeacon) {
