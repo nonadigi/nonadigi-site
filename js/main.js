@@ -52,7 +52,7 @@ window.NONADIGI_FORMSPREE = "https://formspree.io/f/mqparozk";
     input.value = '';
     setTimeout(function(){ reply(text); }, 300);
   }
-  function prices(){ return '<strong>AI Receptionist</strong> — $750 setup + $149/mo<br><strong>AI Visibility Engine</strong> — from $600/mo'; }
+  function prices(){ return '<strong>Every project starts with a free audit — then we quote a simple setup + monthly plan. Founding clients lock their rate for life.'; }
 
   function reply(raw){
     var q = raw.toLowerCase();
@@ -83,7 +83,7 @@ window.NONADIGI_FORMSPREE = "https://formspree.io/f/mqparozk";
     }
     if (q.indexOf('audit') > -1 || q.indexOf('report') > -1){ req = {}; state = 'await_audit_biz'; botSay('Love it — the audit is the best place to start. What\'s your business name?'); return; }
     if (q.indexOf('price') > -1 || q.indexOf('pricing') > -1 || q.indexOf('cost') > -1 || q.indexOf('much') > -1){
-      botSay('Here\'s the menu:<br>' + prices() + '<br><br>Founding clients get 40% off setup with pricing locked in for life. Want the free audit to see which fits?', ['Get my free audit', "I'm good"]); return;
+      botSay('Here\'s how pricing works:<br>' + prices() + '<br><br>Want the free audit to see which fit is right for you?', ['Get my free audit', "I'm good"]); return;
     }
     if (q.indexOf('service') > -1 || q.indexOf('offer') > -1 || q.indexOf('what do you do') > -1){
       botSay('Two offers, done properly:<br><br><strong>AI Receptionist</strong> — a 24/7 AI front desk for your website. Answers, qualifies, books while you sleep.<br><br><strong>AI Visibility Engine</strong> — become the business ChatGPT, Gemini and Perplexity recommend.', ['Get my free audit', 'How does it work?']); return;
