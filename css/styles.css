@@ -126,7 +126,6 @@
   .btn-white{background:#fff;color:var(--primary-deep)}
   footer{background:var(--navy);color:#9fb0c8;padding:44px 0;font-size:13.5px}
   .foot-in{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
-  .mockup-bar{background:var(--navy);color:#ffb96d;font-size:12.5px;font-weight:700;letter-spacing:.06em;text-align:center;padding:10px;position:sticky;top:68px;z-index:40}
   /* NONA floating assistant (orange = Nona Digi brand) */
   #nonaFab{position:fixed;right:24px;bottom:24px;z-index:200;width:62px;height:62px;border-radius:50%;border:none;cursor:pointer;background:linear-gradient(135deg,var(--primary),#ff8a4d);color:#fff;box-shadow:0 14px 30px -8px rgba(255,88,24,.55);display:flex;align-items:center;justify-content:center;transition:transform .18s}
   #nonaFab:hover{transform:scale(1.07)}
