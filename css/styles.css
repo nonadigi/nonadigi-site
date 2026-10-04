@@ -58,8 +58,8 @@
   /* DARK DEMO */
   .dark{background:var(--navy);color:var(--paper);border-radius:28px;margin:0 18px}
   .dark .sub{color:#9fb0c7}
-  .dark-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;margin-top:44px}
-  .feat{display:flex;gap:14px;margin-top:20px}
+  .dark-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start;margin-top:44px}
+  .feat{display:flex;gap:14px;margin-top:12px}
   .feat .n{flex:0 0 34px;height:34px;border-radius:10px;background:rgba(255,88,24,.16);color:#ffb96d;font-weight:800;display:flex;align-items:center;justify-content:center;font-size:15px}
   .feat p{font-size:15.5px;line-height:1.6;color:#c6d2e2}
   .feat p strong{color:#fff}
@@ -193,7 +193,8 @@
   .next-steps div strong{color:var(--ink)}
   /* RESPONSIVE */
   @media (max-width:920px){
-    .hero-grid,.dark-grid{grid-template-columns:1fr;gap:40px}
+    .hero-grid{grid-template-columns:1fr;gap:40px}
+    .dark-grid{grid-template-columns:1fr;gap:24px}
     .offer-grid{grid-template-columns:1fr}
     .work-grid{grid-template-columns:1fr}
     .case-grid{grid-template-columns:1fr}
