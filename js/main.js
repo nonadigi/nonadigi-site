@@ -163,37 +163,53 @@ document.getElementById('auditForm').addEventListener('submit', function(e){
     return;
   }
   /* Production: forward the lead to Formspree (if configured above).
-     Fire-and-forget — the success UI shows regardless so the UX never
-     hangs on the network. */
-  try {
-    if (window.NONADIGI_FORMSPREE) {
-      var payload = { name: name, business: biz, website: web, email: em,
-        _replyto: em,
-        _subject: (claimMode ? 'Founding slot ' + claimSlot + ' hold' : 'Free audit request') + ' — ' + biz,
-        request: claimMode ? ('Founding slot ' + claimSlot + ' of 3') : 'Free AI visibility audit',
-        page: location.href };
-      if (navigator.sendBeacon) {
-        navigator.sendBeacon(window.NONADIGI_FORMSPREE,
-          new Blob([JSON.stringify(payload)], {type: 'application/json'}));
-      } else {
-        fetch(window.NONADIGI_FORMSPREE, { method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-          body: JSON.stringify(payload), keepalive: true });
-      }
-    }
-  } catch (err) { /* never block the UX */ }
-  document.getElementById('audit-form-inner').style.display = 'none';
+     We wait for Formspree's confirmation before showing success — the old
+     fire-and-forget version showed "Slot held" even when delivery failed,
+     which is how a lost lead went unnoticed (2026-10-04). Uses fetch with
+     Formspree's documented AJAX headers instead of sendBeacon, which was
+     silently dropping submissions on some mobile browsers. */
+  var payload = { name: name, business: biz, website: web, email: em,
+    _replyto: em,
+    _subject: (claimMode ? 'Founding slot ' + claimSlot + ' hold' : 'Free audit request') + ' — ' + biz,
+    request: claimMode ? ('Founding slot ' + claimSlot + ' of 3') : 'Free AI visibility audit',
+    page: location.href };
+  var phone = document.getElementById('f-phone').value.trim();
+  if (phone) payload.phone = phone;
+  var formInner = document.getElementById('audit-form-inner');
   var done = document.getElementById('audit-done');
-  if (claimMode) {
-    var safeBiz = biz ? biz.replace(/</g, '&lt;') : 'your business';
-    var safeEm = em ? em.replace(/</g, '&lt;') : 'your inbox';
-    document.getElementById('doneTitle').textContent = 'Slot ' + claimSlot + ' held — no payment taken';
-    document.getElementById('doneText').innerHTML = 'Slot ' + claimSlot + ' is held for <strong>' + safeBiz + '</strong> for the next 48 hours.<br>Your audit + video walkthrough land at <strong>' + safeEm + '</strong> within 24 hours — then we lock it in on a call.';
-  } else if (em) {
-    document.getElementById('done-email').textContent = em;
+  var submitBtn = document.querySelector('#auditForm button[type="submit"]');
+  var btnLabel = submitBtn ? submitBtn.innerHTML : '';
+  var netErr = document.getElementById('err-f-net');
+  function showFormSuccess(){
+    formInner.style.display = 'none';
+    if (claimMode) {
+      var safeBiz = biz ? biz.replace(/</g, '&lt;') : 'your business';
+      var safeEm = em ? em.replace(/</g, '&lt;') : 'your inbox';
+      document.getElementById('doneTitle').textContent = 'Slot ' + claimSlot + ' held — no payment taken';
+      document.getElementById('doneText').innerHTML = 'Slot ' + claimSlot + ' is held for <strong>' + safeBiz + '</strong> for the next 48 hours.<br>Your audit + video walkthrough land at <strong>' + safeEm + '</strong> within 24 hours — then we lock it in on a call.';
+    } else if (em) {
+      document.getElementById('done-email').textContent = em;
+    }
+    done.style.display = 'block';
+    smoothTo(done, true);
   }
-  done.style.display = 'block';
-  smoothTo(done, true);
+  function showFormError(){
+    if (netErr) {
+      netErr.textContent = 'Hmm \u2014 that didn\u2019t go through. Please try again, or call (689) 302-0209 and we\u2019ll set up your audit directly.';
+      netErr.style.display = 'block';
+    }
+    if (submitBtn) { submitBtn.disabled = false; submitBtn.innerHTML = btnLabel; }
+  }
+  if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Sending\u2026'; }
+  if (netErr) netErr.style.display = 'none';
+  if (!window.NONADIGI_FORMSPREE) { showFormError(); return; }
+  fetch(window.NONADIGI_FORMSPREE, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+    body: JSON.stringify(payload)
+  }).then(function(res){
+    if (res.ok) showFormSuccess(); else showFormError();
+  }).catch(function(){ showFormError(); });
 });
 /* smooth in-page scrolling for every anchor button (nav + CTAs).
    Uses window.scrollTo instead of scrollIntoView — more reliable on mobile WebKit. */
