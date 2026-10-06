@@ -144,8 +144,11 @@
   .nona-head .avatar{width:38px;height:38px;font-size:16px;background:linear-gradient(135deg,var(--primary),#ffb96d)}
   .nona-head .who{font-weight:700;font-size:14.5px;line-height:1.3}
   .nona-head .who small{display:block;font-weight:500;color:#9fb0c7;font-size:11.5px}
-  #nonaClose{margin-left:auto;background:none;border:none;color:#9fb0c7;font-size:22px;cursor:pointer;line-height:1;padding:4px}
+  #nonaClose{margin-left:8px;background:none;border:none;color:#9fb0c7;font-size:22px;cursor:pointer;line-height:1;padding:4px}
   #nonaClose:hover{color:#fff}
+  .nona-lang{display:flex;margin-left:auto;border:1px solid #3a4a63;border-radius:20px;overflow:hidden;flex:0 0 auto}
+  .nona-lang button{background:none;border:none;color:#9fb0c7;font-size:11px;font-weight:700;padding:5px 11px;cursor:pointer;letter-spacing:.5px}
+  .nona-lang button.on{background:var(--primary);color:#fff}
   #nonaBody{flex:1;overflow-y:auto;padding:18px 14px;display:flex;flex-direction:column;gap:11px;background:var(--cream2)}
   #nonaBody .msg{font-size:14px;max-width:86%}
   #nonaBody .msg .time{font-size:10px;color:#a3adbb;margin-top:5px}

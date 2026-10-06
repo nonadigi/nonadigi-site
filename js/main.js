@@ -16,7 +16,27 @@ window.NONADIGI_FORMSPREE = "https://formspree.io/f/mqparozk";
   var body = document.getElementById('nonaBody');
   var input = document.getElementById('nonaInput');
   var greeted = false;
-  var STD = ['Get my free audit', 'Services & pricing', 'How does it work?'];
+  var STR = {
+    en: {
+      greeting: 'Hey! I\'m <strong>Nona</strong>, Nona Digi\'s AI assistant. Ask me about our services and pricing — or get your <strong>free AI visibility audit</strong>.',
+      chips: ['Get my free audit', 'Services & pricing', 'How does it work?'],
+      placeholder: 'Ask about services, pricing…',
+      error: 'Hmm — that didn\'t go through. Please try again, or call (689) 302-0209 and we\'ll help directly.',
+      youTag: 'You',
+      note: 'Live demo — Nona answers from our real services & pricing.'
+    },
+    es: {
+      greeting: '¡Hola! Soy <strong>Nona</strong>, la asistente de IA de Nona Digi. Pregúntame sobre nuestros servicios y precios, u obtén tu <strong>auditoría de visibilidad en IA gratuita</strong>.',
+      chips: ['Obtén mi auditoría gratis', 'Servicios y precios', '¿Cómo funciona?'],
+      placeholder: 'Escribe tu mensaje…',
+      error: 'Mmm — eso no se envió. Inténtalo de nuevo o llama al (689) 302-0209 y te ayudamos directamente.',
+      youTag: 'Tú',
+      note: 'Demo en vivo — Nona responde con nuestros servicios y precios reales.'
+    }
+  };
+  var lang = 'en';
+  try { lang = sessionStorage.getItem('nona_lang') === 'es' ? 'es' : 'en'; } catch (e){}
+  var S = function(){ return STR[lang]; };
   var API = 'https://ohwnsrwjdzigzceisker.supabase.co/functions/v1/chat';
   var ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9od25zcndqZHppZ3pjZWlza2VyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTEyMzQzNDksImV4cCI6MjEwNjgxMDM0OX0.Lp_hcHPBRBCeJxCIIgpKpeUGTLSdhG3FrbDTkYSu2NA';
   var sid = null;
@@ -30,7 +50,7 @@ window.NONADIGI_FORMSPREE = "https://formspree.io/f/mqparozk";
   function addMsg(text, who, chips){
     var w = document.createElement('div');
     w.className = 'msg ' + who;
-    w.innerHTML = '<span class="tag">' + (who === 'bot' ? 'Nona' : 'You') + '</span>' + text + '<div class="time">' + nowT() + '</div>';
+    w.innerHTML = '<span class="tag">' + (who === 'bot' ? 'Nona' : S().youTag) + '</span>' + text + '<div class="time">' + nowT() + '</div>';
     body.appendChild(w);
     if (chips && chips.length){
       var c = document.createElement('div');
@@ -71,14 +91,14 @@ window.NONADIGI_FORMSPREE = "https://formspree.io/f/mqparozk";
     fetch(API, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + ANON },
-      body: JSON.stringify({ bot_id: 'nona-digi', session_id: sid, message: text })
+      body: JSON.stringify({ bot_id: 'nona-digi', session_id: sid, message: text, lang: lang })
     }).then(function(res){ return res.json(); }).then(function(data){
       t.remove();
-      if (data && data.reply) addMsg(fmt(data.reply), 'bot', STD);
-      else addMsg('Hmm — that didn\'t go through. Please try again, or call (689) 302-0209 and we\'ll help directly.', 'bot', STD);
+      if (data && data.reply) addMsg(fmt(data.reply), 'bot', S().chips);
+      else addMsg(S().error, 'bot', S().chips);
     }).catch(function(){
       t.remove();
-      addMsg('Hmm — that didn\'t go through. Please try again, or call (689) 302-0209 and we\'ll help directly.', 'bot', STD);
+      addMsg(S().error, 'bot', S().chips);
     });
   }
 
@@ -87,13 +107,29 @@ window.NONADIGI_FORMSPREE = "https://formspree.io/f/mqparozk";
     document.getElementById('nonaFab').setAttribute('aria-expanded', 'true');
     if (!greeted){
       greeted = true;
-      botSay('Hey! I\'m <strong>Nona</strong>, Nona Digi\'s AI assistant. Ask me about our services and pricing — or get your <strong>free AI visibility audit</strong>.', STD, 500);
+      botSay(S().greeting, S().chips, 500);
     }
     setTimeout(function(){ input.focus(); }, 350);
   }
   function close(){ panel.classList.remove('open'); document.getElementById('nonaFab').setAttribute('aria-expanded', 'false'); }
   document.getElementById('nonaFab').onclick = function(){ panel.classList.contains('open') ? close() : open(); };
   document.getElementById('nonaClose').onclick = close;
+  var langEn = document.getElementById('nonaLangEn');
+  var langEs = document.getElementById('nonaLangEs');
+  var noteEl = panel.querySelector('.nona-note');
+  function applyLang(l){
+    lang = l;
+    try { sessionStorage.setItem('nona_lang', l); } catch (e){}
+    langEn.classList.toggle('on', l === 'en');
+    langEs.classList.toggle('on', l === 'es');
+    langEn.setAttribute('aria-pressed', l === 'en' ? 'true' : 'false');
+    langEs.setAttribute('aria-pressed', l === 'es' ? 'true' : 'false');
+    input.placeholder = S().placeholder;
+    if (noteEl) noteEl.innerHTML = S().note.replace(/&/g, '&amp;');
+  }
+  langEn.onclick = function(){ applyLang('en'); };
+  langEs.onclick = function(){ applyLang('es'); };
+  applyLang(lang);
   document.getElementById('nonaSend').onclick = function(){ sendUser(input.value); };
   input.addEventListener('keydown', function(e){ if (e.key === 'Enter') sendUser(input.value); });
   if (location.hash === '#nona') open();
