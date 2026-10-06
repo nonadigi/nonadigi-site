@@ -16,9 +16,11 @@ window.NONADIGI_FORMSPREE = "https://formspree.io/f/mqparozk";
   var body = document.getElementById('nonaBody');
   var input = document.getElementById('nonaInput');
   var greeted = false;
+  var userSent = false;
   var STR = {
     en: {
-      greeting: 'Hey! I\'m <strong>Nona</strong>, Nona Digi\'s AI assistant. Ask me about our services and pricing — or get your <strong>free AI visibility audit</strong>.',
+      greeting: 'Hey! I\'m <strong>Nona</strong>, Nona Digi\'s AI assistant. Ask me about our services and pricing — or get your <strong>free AI visibility audit</strong>. <em>¿Prefieres español? Toca ES arriba.</em>',
+      sub: 'Nona Digi\'s AI assistant · demo',
       chips: ['Get my free audit', 'Services & pricing', 'How does it work?'],
       placeholder: 'Ask about services, pricing…',
       error: 'Hmm — that didn\'t go through. Please try again, or call (689) 302-0209 and we\'ll help directly.',
@@ -26,7 +28,8 @@ window.NONADIGI_FORMSPREE = "https://formspree.io/f/mqparozk";
       note: 'Live demo — Nona answers from our real services & pricing.'
     },
     es: {
-      greeting: '¡Hola! Soy <strong>Nona</strong>, la asistente de IA de Nona Digi. Pregúntame sobre nuestros servicios y precios, u obtén tu <strong>auditoría de visibilidad en IA gratuita</strong>.',
+      greeting: '¡Hola! Soy <strong>Nona</strong>, la asistente de IA de Nona Digi. Pregúntame sobre nuestros servicios y precios, u obtén tu <strong>auditoría de visibilidad en IA gratuita</strong>. <em>Prefer English? Tap EN above.</em>',
+      sub: 'Asistente de IA de Nona Digi · demo',
       chips: ['Obtén mi auditoría gratis', 'Servicios y precios', '¿Cómo funciona?'],
       placeholder: 'Escribe tu mensaje…',
       error: 'Mmm — eso no se envió. Inténtalo de nuevo o llama al (689) 302-0209 y te ayudamos directamente.',
@@ -64,19 +67,39 @@ window.NONADIGI_FORMSPREE = "https://formspree.io/f/mqparozk";
       body.appendChild(c);
     }
     scroll();
+    return w;
   }
-  function botSay(text, chips, delay){
+  function botSay(text, chips, delay, cls){
     var t = document.createElement('div');
     t.className = 'nona-typing';
     t.innerHTML = '<span></span><span></span><span></span>';
     body.appendChild(t); scroll();
-    setTimeout(function(){ t.remove(); addMsg(text, 'bot', chips); }, (delay || 900) + Math.random() * 400);
+    setTimeout(function(){ t.remove(); var w = addMsg(text, 'bot', chips); if (cls) w.classList.add(cls); }, (delay || 900) + Math.random() * 400);
   }
   function sendUser(text){
     if (!text.trim()) return;
+    userSent = true;
     addMsg(text.replace(/</g, '&lt;'), 'user');
     input.value = '';
     askNona(text);
+  }
+  /* Re-render the greeting in the current language (only before the user has sent anything). */
+  function refreshGreeting(){
+    if (userSent) return;
+    var m = body.querySelector('.msg.bot.greet');
+    if (!m) return;
+    m.innerHTML = '<span class="tag">Nona</span>' + S().greeting + '<div class="time">' + nowT() + '</div>';
+    var c = m.nextElementSibling;
+    if (c && c.classList.contains('nona-chips')) c.remove();
+    var nc = document.createElement('div');
+    nc.className = 'nona-chips';
+    S().chips.forEach(function(label){
+      var b = document.createElement('button');
+      b.className = 'nona-chip'; b.textContent = label;
+      b.onclick = function(){ nc.remove(); sendUser(label); };
+      nc.appendChild(b);
+    });
+    m.after(nc);
   }
   /* Model output is HTML-escaped, then given light markdown (bold + line breaks). */
   function fmt(s){
@@ -107,7 +130,7 @@ window.NONADIGI_FORMSPREE = "https://formspree.io/f/mqparozk";
     document.getElementById('nonaFab').setAttribute('aria-expanded', 'true');
     if (!greeted){
       greeted = true;
-      botSay(S().greeting, S().chips, 500);
+      botSay(S().greeting, S().chips, 500, 'greet');
     }
     setTimeout(function(){ input.focus(); }, 350);
   }
@@ -126,6 +149,9 @@ window.NONADIGI_FORMSPREE = "https://formspree.io/f/mqparozk";
     langEs.setAttribute('aria-pressed', l === 'es' ? 'true' : 'false');
     input.placeholder = S().placeholder;
     if (noteEl) noteEl.innerHTML = S().note.replace(/&/g, '&amp;');
+    var subEl = panel.querySelector('.nona-head .who small');
+    if (subEl) subEl.textContent = S().sub;
+    refreshGreeting();
   }
   langEn.onclick = function(){ applyLang('en'); };
   langEs.onclick = function(){ applyLang('es'); };
