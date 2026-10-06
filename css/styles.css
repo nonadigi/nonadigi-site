@@ -69,7 +69,7 @@
   .feat .n{flex:0 0 34px;height:34px;border-radius:10px;background:rgba(255,88,24,.16);color:#ffb96d;font-weight:800;display:flex;align-items:center;justify-content:center;font-size:15px}
   .feat p{font-size:15.5px;line-height:1.6;color:#c6d2e2}
   .feat p strong{color:#fff}
-  .dark-cta{margin-top:26px}
+  .dark-cta{margin-top:44px}
   /* OFFERS */
   .offer-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:44px}
   .offer{background:#fff;border:1px solid var(--line);border-radius:22px;padding:36px;position:relative;overflow:hidden}
@@ -129,7 +129,7 @@
   .final{background:var(--primary);border-radius:28px;margin:0 18px 90px;padding:70px 40px;text-align:center;color:#fff;position:relative;overflow:hidden}
   .final::before{content:"";position:absolute;width:500px;height:500px;left:50%;top:-260px;transform:translateX(-50%);background:radial-gradient(circle,rgba(255,255,255,.22),transparent 65%)}
   .final h2{color:#fff;max-width:700px;margin:0 auto}
-  .final p{color:#ffe3d3;margin:16px auto 32px;max-width:560px;font-size:17px;line-height:1.65}
+  .final p{color:#ffe3d3;margin:16px auto 32px;max-width:900px;font-size:17px;line-height:1.65}
   .btn-white{background:#fff;color:var(--primary-deep)}
   footer{background:var(--navy);color:#9fb0c8;padding:44px 0;font-size:13.5px}
   .foot-in{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
