@@ -10,15 +10,21 @@ window.NONADIGI_FORMSPREE = "https://formspree.io/f/mqparozk";
 
 
 
-/* ---- Nona widget ---- */
+/* ---- Nona widget (live backend: Supabase Edge Function `chat`) ---- */
 (function(){
   var panel = document.getElementById('nonaPanel');
   var body = document.getElementById('nonaBody');
   var input = document.getElementById('nonaInput');
-  var state = 'idle', req = {}, greeted = false;
+  var greeted = false;
   var STD = ['Get my free audit', 'Services & pricing', 'How does it work?'];
+  var API = 'https://ohwnsrwjdzigzceisker.supabase.co/functions/v1/chat';
+  var ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9od25zcndqZHppZ3pjZWlza2VyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTEyMzQzNDksImV4cCI6MjEwNjgxMDM0OX0.Lp_hcHPBRBCeJxCIIgpKpeUGTLSdhG3FrbDTkYSu2NA';
+  var sid = null;
+  try {
+    sid = sessionStorage.getItem('nona_sid');
+    if (!sid){ sid = 's' + Date.now().toString(36) + Math.random().toString(36).slice(2, 10); sessionStorage.setItem('nona_sid', sid); }
+  } catch (e){ sid = 's' + Date.now().toString(36) + Math.random().toString(36).slice(2, 10); }
   var nowT = function(){ return new Date().toLocaleTimeString([], {hour:'numeric', minute:'2-digit'}); };
-  var validEmail = function(e){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e); };
 
   function scroll(){ body.scrollTop = body.scrollHeight; }
   function addMsg(text, who, chips){
@@ -50,57 +56,30 @@ window.NONADIGI_FORMSPREE = "https://formspree.io/f/mqparozk";
     if (!text.trim()) return;
     addMsg(text.replace(/</g, '&lt;'), 'user');
     input.value = '';
-    setTimeout(function(){ reply(text); }, 300);
+    askNona(text);
   }
-  function prices(){ return '<strong>AI Receptionist</strong> — <s>Standard: $1,200 setup + $299/mo</s><br><strong>Founding (after 40% discount): $720 setup + $179/mo</strong><br><br><strong>AI Visibility Engine</strong> — <s>Standard: $900/mo</s><br><strong>Founding (after 40% discount): $540/mo</strong><br><span style="font-size:12px">Founding rates locked for 12 months.</span>'; }
-
-  function reply(raw){
-    var q = raw.toLowerCase();
-    if (state === 'await_audit_biz'){
-      req.business = raw.trim().replace(/</g, '&lt;');
-      state = 'await_audit_web';
-      botSay('Great — <strong>' + req.business + '</strong>. What\'s your website? (Just paste the URL.)');
-      return;
-    }
-    if (state === 'await_audit_web'){
-      req.website = raw.trim().replace(/</g, '&lt;').replace(/^https?:\/\//, '');
-      state = 'await_audit_email';
-      botSay('And where should we send the report?');
-      return;
-    }
-    if (state === 'await_audit_email'){
-      if (!validEmail(raw.trim())){ botSay('Hmm, that email doesn\'t look quite right — mind double-checking it?'); return; }
-      req.email = raw.trim().replace(/</g, '&lt;');
-      state = 'done';
-      botSay('You\'re in! Your 5-point AI visibility report for <strong>' + req.business + '</strong> is being prepared — it\'ll land at <strong>' + req.email + '</strong> within 24 hours, along with a personal video walkthrough. Anything else I can help with?', ["I'm good", 'Services & pricing']);
-      return;
-    }
-    if (state === 'await_human_email'){
-      if (!validEmail(raw.trim())){ botSay('Hmm, that email doesn\'t look quite right — mind double-checking it?'); return; }
-      state = 'done';
-      botSay('Got it — someone from the team will reply to <strong>' + raw.trim().replace(/</g, '&lt;') + '</strong> within one business day. Anything else?', ["I'm good", 'Get my free audit']);
-      return;
-    }
-    if (q.indexOf('audit') > -1 || q.indexOf('report') > -1){ req = {}; state = 'await_audit_biz'; botSay('Love it — the audit is the best place to start. What\'s your business name?'); return; }
-    if (q.indexOf('price') > -1 || q.indexOf('pricing') > -1 || q.indexOf('cost') > -1 || q.indexOf('much') > -1){
-      botSay('Pricing — founding prices are already after the 40% discount:<br><br>' + prices() + '<br><br>Want the free audit to see which fit is right for you?', ['Get my free audit', "I'm good"]); return;
-    }
-    if (q.indexOf('service') > -1 || q.indexOf('offer') > -1 || q.indexOf('what do you do') > -1){
-      botSay('Two offers, done properly:<br><br><strong>AI Receptionist</strong> — a 24/7 AI front desk for your website. Answers, qualifies, books while you sleep.<br><br><strong>AI Visibility Engine</strong> — become the business ChatGPT, Gemini and Perplexity recommend.', ['Get my free audit', 'How does it work?']); return;
-    }
-    if (q.indexOf('how does it work') > -1 || q.indexOf('how it works') > -1 || q.indexOf('process') > -1){
-      botSay('<strong>1.</strong> Try the demo on this page — our AI receptionist for a fictional dental clinic.<br><strong>2.</strong> Get your free audit.<br><strong>3.</strong> Go live in 7 days.', ['Get my free audit', "I'm good"]); return;
-    }
-    if (q.indexOf('demo') > -1){
-      botSay('The Smile Studio demo above is our AI Receptionist in action — for a fictional dental clinic. And <em>right now</em>, I\'m the same product working for Nona Digi. Want us to map it out for your business?', ['Get my free audit']); return;
-    }
-    if (q.indexOf('human') > -1 || q.indexOf('real person') > -1 || q.indexOf('team') > -1 || q.indexOf('contact') > -1){
-      state = 'await_human_email'; botSay('Of course — leave your email and someone from the team will reply within one business day.'); return;
-    }
-    if (q.indexOf("i'm good") > -1 || q.indexOf('im good') > -1){ botSay('Perfect — have a great day! If anything comes up later, I\'ll be right here.'); return; }
-    if (q.indexOf('thank') > -1){ botSay('Anytime! If anything else comes up, I\'ll be right here.'); return; }
-    if (q.indexOf('bye') > -1){ botSay('Take care — and remember, your competitors\' customers are asking AI for recommendations right now.'); return; }
-    botSay('Good question — I\'ll have the team confirm that personally. Meanwhile, can I help with services, pricing, or the free audit?', STD);
+  /* Model output is HTML-escaped, then given light markdown (bold + line breaks). */
+  function fmt(s){
+    var e = String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    return e.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>');
+  }
+  function askNona(text){
+    var t = document.createElement('div');
+    t.className = 'nona-typing';
+    t.innerHTML = '<span></span><span></span><span></span>';
+    body.appendChild(t); scroll();
+    fetch(API, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + ANON },
+      body: JSON.stringify({ bot_id: 'nona-digi', session_id: sid, message: text })
+    }).then(function(res){ return res.json(); }).then(function(data){
+      t.remove();
+      if (data && data.reply) addMsg(fmt(data.reply), 'bot', STD);
+      else addMsg('Hmm — that didn\'t go through. Please try again, or call (689) 302-0209 and we\'ll help directly.', 'bot', STD);
+    }).catch(function(){
+      t.remove();
+      addMsg('Hmm — that didn\'t go through. Please try again, or call (689) 302-0209 and we\'ll help directly.', 'bot', STD);
+    });
   }
 
   function open(){
@@ -119,6 +98,7 @@ window.NONADIGI_FORMSPREE = "https://formspree.io/f/mqparozk";
   input.addEventListener('keydown', function(e){ if (e.key === 'Enter') sendUser(input.value); });
   if (location.hash === '#nona') open();
 })();
+
 
 /* ---- Audit form + claim flow + smooth scroll ---- */
 var claimMode = false, claimSlot = 2;
