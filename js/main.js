@@ -166,7 +166,7 @@ document.getElementById('auditForm').addEventListener('submit', function(e){
       var safeBiz = biz ? biz.replace(/</g, '&lt;') : 'your business';
       var safeEm = em ? em.replace(/</g, '&lt;') : 'your inbox';
       document.getElementById('doneTitle').textContent = 'Slot ' + claimSlot + ' held — no payment taken';
-      document.getElementById('doneText').innerHTML = 'Slot ' + claimSlot + ' is held for <strong>' + safeBiz + '</strong> for the next 48 hours.<br>Your audit + video walkthrough land at <strong>' + safeEm + '</strong> within 24 hours — then we lock it in on a call.';
+      document.getElementById('doneText').innerHTML = 'Slot ' + claimSlot + ' is held for <strong>' + safeBiz + '</strong> for the next 48 hours.<br>Your audit + video walkthrough land at <strong>' + safeEm + '</strong> within 24 hours — then we lock it in on a call.<br><br><a href="https://calendly.com/nonadigi-sales/free-ai-visibility-audit" target="_blank" rel="noopener"><strong>Book your walkthrough call &rarr;</strong></a>';
     } else if (em) {
       document.getElementById('done-email').textContent = em;
     }
