@@ -441,7 +441,7 @@ document.querySelectorAll('a[href^="#"]').forEach(function(a){
       return;
     }
     if (/^(hi|hey|hello|hiya|howdy|yo|greetings|good morning|good afternoon|good evening)\b/.test(q)){
-      botSay('Hi there! Looking for a dentist in Lake Nona? I can answer questions about our services and prices, check availability, and book you in — what can I do for you?', STD);
+      botSay('Hi there! Pick one of the options below or just ask away — happy to help.', STD);
       return;
     }
     if (q.indexOf('reschedule') > -1 || q.indexOf('change my appointment') > -1 || q.indexOf('move my appointment') > -1 || q.indexOf('different day') > -1 || q.indexOf('different time') > -1){
