@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Lead Pipeline — Nona Digi Internal</title>
+<style>
+  :root{
+    --cream:#faf6ef; --ink:#1c2b3a; --muted:#6b7a8d; --line:#e8e0d2;
+    --orange:#e8730c; --orange-soft:#fdeede; --green:#1e8e4d; --green-soft:#e3f4e9;
+    --red:#c93a3a; --red-soft:#fdecec; --amber:#b97a0c; --amber-soft:#fdf3e0;
+    --card:#fff; --navy:#16324a;
+  }
+  *{box-sizing:border-box; margin:0; padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif; background:var(--cream); color:var(--ink); padding:28px; font-size:14px}
+  .wrap{max-width:1460px; margin:0 auto}
+  .topbar{display:flex; justify-content:space-between; align-items:center; margin-bottom:18px}
+  .topbar h1{font-size:22px} .topbar h1 small{display:block; font-size:12px; color:var(--muted); font-weight:500}
+  .stats{display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-bottom:18px}
+  .stat{background:var(--card); border:1px solid var(--line); border-radius:14px; padding:16px 18px}
+  .stat .n{font-size:26px; font-weight:800} .stat .l{font-size:12px; color:var(--muted)}
+  .stat.warn .n{color:var(--red)} .stat.warn{background:var(--red-soft); border-color:#f3c8c8}
+  .stat.good .n{color:var(--green)}
+  .alerts{background:#fff; border:1px solid #f3c8c8; border-left:4px solid var(--red); border-radius:12px; padding:14px 18px; margin-bottom:18px; display:none}
+  .alerts.show{display:block}
+  .alerts h3{font-size:13px; color:var(--red); margin-bottom:8px}
+  .alerts li{font-size:13px; margin-left:18px; margin-bottom:4px}
+  .board{display:grid; grid-template-columns:repeat(7,minmax(150px,1fr)); gap:10px; align-items:start; overflow-x:auto}
+  .col{background:#f3eee2; border-radius:14px; padding:10px; min-height:380px; min-width:150px}
+  .col h2{font-size:11.5px; text-transform:uppercase; letter-spacing:.05em; color:var(--muted); padding:4px 6px 10px; display:flex; justify-content:space-between}
+  .col h2 .count{background:#fff; border:1px solid var(--line); border-radius:99px; font-size:11px; padding:1px 8px; color:var(--ink)}
+  .card{background:var(--card); border:1px solid var(--line); border-radius:12px; padding:12px; margin-bottom:10px; cursor:pointer; box-shadow:0 2px 6px rgba(20,30,45,.05)}
+  .card:hover{border-color:var(--orange)}
+  .card.stale{border-left:4px solid var(--red)} .card.hot{border-left:4px solid var(--orange)} .card.won{border-left:4px solid var(--green)}
+  .card .biz{font-weight:700; font-size:13.5px} .card .who{font-size:12px; color:var(--muted); margin:2px 0 8px}
+  .badges{display:flex; gap:6px; flex-wrap:wrap}
+  .badge{font-size:10.5px; font-weight:700; padding:3px 8px; border-radius:99px}
+  .b-src{background:#e8eef5; color:#33566f} .b-time{background:var(--orange-soft); color:#a3540a}
+  .b-time.over{background:var(--red-soft); color:var(--red)} .b-slot{background:var(--amber-soft); color:var(--amber)}
+  .b-slot.expired{background:var(--red-soft); color:var(--red)} .b-prod{background:#e9e4f7; color:#5b4a9e}
+  .empty{text-align:center; color:#b3a98f; font-size:12px; padding:20px 0}
+  .loading{text-align:center; color:var(--muted); padding:60px; font-size:15px}
+  .modal{position:fixed; inset:0; background:rgba(20,30,45,.45); display:none; align-items:center; justify-content:center; z-index:100}
+  .modal.show{display:flex}
+  .sheet{background:#fff; border-radius:16px; padding:26px; width:380px; max-width:92vw}
+  .sheet h3{margin-bottom:4px} .sheet .sub{font-size:12.5px; color:var(--muted); margin-bottom:16px}
+  .sheet label{display:block; font-size:12px; font-weight:700; margin:12px 0 4px}
+  .sheet select{width:100%; padding:10px; border:1px solid var(--line); border-radius:10px; font-size:14px}
+  .sheet .row{display:flex; gap:10px; margin-top:20px}
+  .sheet button{flex:1; padding:11px; border-radius:10px; font-weight:700; font-size:14px; cursor:pointer; border:none}
+  .btn-save{background:var(--orange); color:#fff} .btn-cancel{background:#f0ece1; color:var(--ink)}
+  .err{background:var(--red-soft); border:1px solid #f3c8c8; color:var(--red); border-radius:12px; padding:14px 18px; margin-bottom:18px; display:none}
+  .refresh{font-size:12px; color:var(--muted); text-align:right; margin-top:14px}
+  .loginwrap{position:fixed; inset:0; background:var(--cream); display:none; align-items:center; justify-content:center; z-index:200}
+  .loginwrap.show{display:flex}
+  .logincard{background:#fff; border:1px solid var(--line); border-radius:16px; padding:32px; width:360px; max-width:92vw; box-shadow:0 8px 30px rgba(20,30,45,.08)}
+  .logincard h2{font-size:20px} .logincard .sub{font-size:12.5px; color:var(--muted); margin:4px 0 16px}
+  .logincard label{display:block; font-size:12px; font-weight:700; margin:12px 0 4px}
+  .logincard input{width:100%; padding:10px; border:1px solid var(--line); border-radius:10px; font-size:14px}
+  .loginmsg{font-size:13px; color:var(--red); min-height:18px}
+  .signout{background:none; border:1px solid var(--line); border-radius:99px; padding:6px 14px; font-size:12px; color:var(--muted); cursor:pointer}
+  .signout:hover{color:var(--ink); border-color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="topbar">
+    <h1>Lead Pipeline <small>Nona Digi internal · live from Supabase</small></h1>
+    <span><span style="font-size:12px;color:var(--muted);margin-right:10px" id="clock"></span><button class="signout" id="signout" style="display:none">Sign out</button></span>
+  </div>
+  <div class="err" id="err"></div>
+  <div class="stats">
+    <div class="stat"><div class="n" id="sActive">–</div><div class="l">Active leads</div></div>
+    <div class="stat warn"><div class="n" id="sSla">–</div><div class="l">SLA breaches</div></div>
+    <div class="stat warn"><div class="n" id="sCold">–</div><div class="l">Going cold (4+ days, no movement)</div></div>
+    <div class="stat good"><div class="n" id="sConv">–</div><div class="l">Report → call booking rate</div></div>
+  </div>
+  <div class="alerts" id="alerts"><h3>⚠ Needs you today</h3><ul id="alertList"></ul></div>
+  <div class="board" id="board"><div class="loading">Loading leads…</div></div>
+  <div class="refresh" id="refreshNote"></div>
+</div>
+
+<div class="loginwrap" id="login">
+  <div class="logincard">
+    <h2>Lead Pipeline</h2>
+    <p class="sub">Nona Digi internal — sign in to continue</p>
+    <div class="loginmsg" id="loginMsg"></div>
+    <label>Email</label>
+    <input type="email" id="loginEmail" autocomplete="username" placeholder="you@example.com">
+    <label>Password</label>
+    <input type="password" id="loginPw" autocomplete="current-password" placeholder="••••••••">
+    <button class="btn-save" id="loginBtn" style="width:100%;margin-top:18px;padding:12px;border-radius:10px;border:none;font-weight:700;font-size:14px;cursor:pointer">Sign in</button>
+  </div>
+</div>
+
+<div class="modal" id="modal">
+  <div class="sheet">
+    <h3 id="mBiz"></h3><div class="sub" id="mWho"></div>
+    <label>Stage</label>
+    <select id="mStage"></select>
+    <label>Product lean</label>
+    <select id="mLean">
+      <option value="">— unknown —</option>
+      <option value="receptionist">AI Chat Receptionist</option>
+      <option value="engine">AI Visibility Engine</option>
+    </select>
+    <div class="row">
+      <button class="btn-cancel" id="mCancel">Cancel</button>
+      <button class="btn-save" id="mSave">Save</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ================= CONFIG =================
+const PIPELINE_API = "https://ohwnsrwjdzigzceisker.supabase.co/functions/v1/pipeline";
+const SUPABASE_AUTH_URL = "https://ohwnsrwjdzigzceisker.supabase.co/auth/v1";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9od25zcndqZHppZ3pjZWlza2VyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTEyMzQzNDksImV4cCI6MjEwNjgxMDM0OX0.Lp_hcHPBRBCeJxCIIgpKpeUGTLSdhG3FrbDTkYSu2NA"; // public key, safe for browsers
+// ==========================================
+
+const STAGES = [
+  ["captured","Captured"],["audit_in_progress","Audit in progress"],
+  ["report_delivered","Report delivered"],["call_booked","Call booked"],
+  ["call_done","Call done"],["proposal_sent","Proposal sent"],["won","Won / Lost"]
+];
+const STAGE_LABEL = Object.fromEntries(STAGES);
+let leads = [], selectedId = null;
+
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? "").replace(/</g,"&lt;");
+
+function hrsSince(ts){ return (Date.now() - new Date(ts).getTime()) / 36e5; }
+function fmtAge(h){
+  if (h < 1) return Math.round(h*60) + "m";
+  if (h < 24) return Math.round(h) + "h";
+  return Math.round(h/24) + "d";
+}
+// when did this lead enter 'report_delivered'? (for the 48h slot hold)
+function enteredStage(l, stage){
+  const hist = l.stage_history || [];
+  for (let i = hist.length - 1; i >= 0; i--)
+    if (hist[i].stage === stage) return hist[i].at;
+  return l.stage === stage ? l.stage_changed_at : null;
+}
+
+let accessToken = sessionStorage.getItem("pipeline_token") || null;
+
+async function api(method, body){
+  const r = await fetch(PIPELINE_API, {
+    method, headers: { "Content-Type":"application/json", "Authorization": "Bearer " + accessToken },
+    body: body ? JSON.stringify(body) : undefined
+  });
+  if (r.status === 401){ showLogin("Session expired — please sign in again."); throw new Error("signed out"); }
+  if (!r.ok) throw new Error("API " + r.status);
+  return r.json();
+}
+
+function showLogin(msg){
+  accessToken = null; sessionStorage.removeItem("pipeline_token");
+  $("signout").style.display = "none";
+  if (msg) $("loginMsg").textContent = msg;
+  $("board").innerHTML = "";
+  $("login").classList.add("show");
+}
+
+async function doLogin(){
+  const email = $("loginEmail").value.trim(), pw = $("loginPw").value;
+  const btn = $("loginBtn"); btn.disabled = true; btn.textContent = "Signing in…";
+  try {
+    const r = await fetch(SUPABASE_AUTH_URL + "/token?grant_type=password", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "apikey": SUPABASE_ANON_KEY },
+      body: JSON.stringify({ email, password: pw })
+    });
+    if (!r.ok) throw new Error("Invalid email or password.");
+    const j = await r.json();
+    accessToken = j.access_token;
+    sessionStorage.setItem("pipeline_token", accessToken);
+    $("login").classList.remove("show");
+    $("loginMsg").textContent = "";
+    $("loginPw").value = "";
+    $("signout").style.display = "";
+    await load();
+  } catch(e){ $("loginMsg").textContent = e.message; }
+  btn.disabled = false; btn.textContent = "Sign in";
+}
+$("loginBtn").onclick = doLogin;
+$("loginPw").addEventListener("keydown", e => { if (e.key === "Enter") doLogin(); });
+$("signout").onclick = () => showLogin();
+
+async function load(){
+  if (!accessToken){ showLogin(); return; }
+  try {
+    const { leads: rows } = await api("GET");
+    leads = rows; render();
+    $("err").style.display = "none";
+    $("refreshNote").textContent = "Last refreshed " + new Date().toLocaleTimeString();
+  } catch(e){
+    if (e.message === "signed out") return;
+    const el = $("err"); el.style.display = "block";
+    el.textContent = "Couldn't load leads: " + e.message;
+  }
+}
+
+function render(){
+  const active = leads.filter(l => !["won","lost"].includes(l.stage));
+  const sla = [], cold = [];
+  let delivered = 0, booked = 0;
+
+  const board = $("board"); board.innerHTML = "";
+  for (const [key, label] of STAGES){
+    const col = document.createElement("div"); col.className = "col";
+    const items = leads.filter(l => l.stage === key || (key === "won" && l.stage === "lost"));
+    col.innerHTML = `<h2>${label} <span class="count">${items.length}</span></h2>`;
+    if (!items.length){ col.innerHTML += `<div class="empty">—</div>`; }
+    for (const l of items){
+      const ageH = hrsSince(l.stage_changed_at);
+      const card = document.createElement("div"); card.className = "card";
+      let badges = `<span class="badge b-src">${l.source === "audit_form" ? "Audit form" : "Receptionist"}</span>`;
+      // time in stage
+      const over = (key === "audit_in_progress" && ageH > 18) || (ageH > 96 && !["won","lost"].includes(key));
+      badges += `<span class="badge b-time${over ? " over" : ""}">${fmtAge(ageH)} in stage</span>`;
+      // slot hold countdown (48h from report delivery)
+      if (key === "report_delivered"){
+        const at = enteredStage(l, "report_delivered");
+        if (at){
+          const left = 48 - hrsSince(at);
+          badges += left > 0
+            ? `<span class="badge b-slot">Hold: ${Math.round(left)}h left</span>`
+            : `<span class="badge b-slot expired">Hold expired</span>`;
+          if (left <= 0) sla.push(`<b>${esc(l.name || "Unnamed")}</b> — report delivered ${fmtAge(hrsSince(at))} ago, no call booked. Slot hold <b>expired</b>.`);
+        }
+      }
+      if (key === "audit_in_progress" && ageH > 18)
+        sla.push(`<b>${esc(l.name || "Unnamed")}</b> — audit in progress ${fmtAge(ageH)}. Your <b>24h report promise</b> has ${Math.max(0, Math.round(24 - ageH))}h left.`);
+      if (over && !["won","lost"].includes(key)) card.classList.add(ageH > 96 ? "stale" : "hot");
+      if (key === "won") card.classList.add("won");
+      if (l.product_lean) badges += `<span class="badge b-prod">${l.product_lean === "engine" ? "Engine lean" : "Receptionist lean"}</span>`;
+      if (ageH > 96 && !["won","lost"].includes(key)) cold.push(l);
+      card.innerHTML = `<div class="biz">${esc(l.name || "Unnamed lead")}</div>
+        <div class="who">${esc(l.service || "")}${l.phone ? " · " + esc(l.phone) : ""}</div>
+        <div class="badges">${badges}</div>`;
+      card.onclick = () => openModal(l.id);
+      col.appendChild(card);
+    }
+    board.appendChild(col);
+    if (key === "report_delivered") delivered = list.length;
+    if (key === "call_booked") booked = list.length;
+  }
+
+  $("sActive").textContent = active.length;
+  $("sSla").textContent = sla.length;
+  $("sCold").textContent = cold.length;
+  $("sConv").textContent = delivered ? Math.round(booked / delivered * 100) + "%" : "–";
+
+  const alerts = $("alerts"), al = $("alertList");
+  if (sla.length){ alerts.classList.add("show"); al.innerHTML = sla.map(s => `<li>${s}</li>`).join(""); }
+  else alerts.classList.remove("show");
+
+  const t = new Date();
+  $("clock").textContent = t.toLocaleDateString(undefined, {weekday:"short", month:"short", day:"numeric"}) + " · " + t.toLocaleTimeString([], {hour:"2-digit", minute:"2-digit"});
+}
+
+function openModal(id){
+  const l = leads.find(x => x.id === id); if (!l) return;
+  selectedId = id;
+  $("mBiz").textContent = l.name || "Unnamed lead";
+  $("mWho").textContent = [l.email, l.phone, l.service].filter(Boolean).join(" · ");
+  $("mStage").innerHTML = STAGES.map(([k, v]) => `<option value="${k}"${l.stage===k?" selected":""}>${v}</option>`).join("");
+  $("mLean").value = l.product_lean || "";
+  $("modal").classList.add("show");
+}
+$("mCancel").onclick = () => $("modal").classList.remove("show");
+$("modal").onclick = e => { if (e.target.id === "modal") $("modal").classList.remove("show"); };
+$("mSave").onclick = async () => {
+  const btn = $("mSave"); btn.disabled = true; btn.textContent = "Saving…";
+  try {
+    await api("PATCH", { id: selectedId, stage: $("mStage").value,
+      product_lean: $("mLean").value || null });
+    $("modal").classList.remove("show");
+    await load();
+  } catch(e){ alert("Save failed: " + e.message); }
+  btn.disabled = false; btn.textContent = "Save";
+};
+
+if (accessToken){ $("login").classList.remove("show"); $("signout").style.display = ""; load(); }
+else showLogin();
+setInterval(() => { if (accessToken) load(); }, 60000);
+</script>
+</body>
+</html>
