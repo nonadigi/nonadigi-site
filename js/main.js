@@ -49,7 +49,7 @@ window.NONADIGI_FORMSPREE = "https://formspree.io/f/mqparozk";
   } catch (e){ sid = 's' + Date.now().toString(36) + Math.random().toString(36).slice(2, 10); }
   var nowT = function(){ return new Date().toLocaleTimeString([], {hour:'numeric', minute:'2-digit'}); };
 
-  function scroll(){ body.scrollTop = body.scrollHeight; }
+  function scroll(){ requestAnimationFrame(function(){ body.scrollTop = body.scrollHeight; }); }
   function addMsg(text, who, chips){
     var w = document.createElement('div');
     w.className = 'msg ' + who;
@@ -303,7 +303,7 @@ document.querySelectorAll('a[href^="#"]').forEach(function(a){
     return digits;
   }
   var fmtPhone = function(d){ return '(' + d.slice(0,3) + ') ' + d.slice(3,6) + '-' + d.slice(6); };
-  function scroll(){ body.scrollTop = body.scrollHeight; }
+  function scroll(){ requestAnimationFrame(function(){ body.scrollTop = body.scrollHeight; }); }
   function addMsg(text, who, chips){
     var w = document.createElement('div');
     w.className = 'msg ' + who;
@@ -501,8 +501,20 @@ document.querySelectorAll('a[href^="#"]').forEach(function(a){
   document.getElementById('demoSend').onclick = function(){ sendUser(input.value); };
   input.addEventListener('keydown', function(e){ if (e.key === 'Enter') sendUser(input.value); });
   document.getElementById('talkCta').addEventListener('click', function(){ setTimeout(function(){ input.focus(); }, 600); });
-  setTimeout(function(){
+  /* Auto-greet only when the demo scrolls into view: keeps greeting-triggered
+     layout work out of the initial page-load window (Speed Index / forced reflows). */
+  function autoGreet(){
+    if (greeted) return;
     greeted = true;
     botSay('Hi! Looking for a dentist in Lake Nona? I can answer questions, check availability, and book you in — what do you need?', ['Book an appointment', 'See prices', 'Opening hours'], 600);
-  }, 900);
+  }
+  var demoEl = document.getElementById('demoWindow');
+  if ('IntersectionObserver' in window && demoEl){
+    var io = new IntersectionObserver(function(entries){
+      if (entries[0].isIntersecting){ autoGreet(); io.disconnect(); }
+    }, { rootMargin: '200px' });
+    io.observe(demoEl);
+  } else {
+    setTimeout(autoGreet, 1500);
+  }
 })();
