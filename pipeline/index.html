@@ -245,8 +245,8 @@ function render(){
       col.appendChild(card);
     }
     board.appendChild(col);
-    if (key === "report_delivered") delivered = list.length;
-    if (key === "call_booked") booked = list.length;
+    if (key === "report_delivered") delivered = items.length;
+    if (key === "call_booked") booked = items.length;
   }
 
   $("sActive").textContent = active.length;
