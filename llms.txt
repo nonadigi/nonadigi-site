@@ -29,16 +29,16 @@ Local and US service businesses that miss calls after hours and want AI search
 to send them customers instead of competitors.
 
 ## Key pages
-- Homepage: https://nonadigi.com/
-- Services and pricing: https://nonadigi.com/#services
-- Live demo: https://nonadigi.com/#demo
-- Free AI visibility audit: https://nonadigi.com/#audit
-- FAQ: https://nonadigi.com/#faq
+- [Homepage](https://nonadigi.com/): Nona Digi overview, live demos, and founding offer.
+- [Services and pricing](https://nonadigi.com/#services): AI Receptionist and AI Visibility Engine plans.
+- [Live demo](https://nonadigi.com/#demo): try the AI Receptionist on a fictional dental clinic.
+- [Free AI visibility audit](https://nonadigi.com/#audit): request a 5-point AI visibility report.
+- [FAQ](https://nonadigi.com/#faq): common questions about the AI Receptionist.
 
 ## Contact
 - Phone: (689) 302-0209
 - Location: Orlando, Florida, USA
-- Booking: https://calendly.com/nonadigi-sales/free-ai-visibility-audit
+- Booking: [book a free AI visibility audit call](https://calendly.com/nonadigi-sales/free-ai-visibility-audit)
 
 ## Brand note
 The company name is "Nona Digi" (two words) in all copy. "nonadigi" (one word)
