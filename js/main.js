@@ -480,8 +480,18 @@ document.querySelectorAll('a[href^="#"]').forEach(function(a){
       botSay('You\'ll find us at <strong>' + CFG.address + '</strong> — <a href="' + mu + '" target="_blank" rel="noopener">get directions →</a>. Free parking right outside.');
       return;
     }
+    var namedIns = CFG.insurances.find(function(i){ return q.indexOf(i.toLowerCase()) > -1; });
+    if (namedIns){
+      botSay('Yes — we work with <strong>' + namedIns + '</strong>, and we\'ll verify your coverage before any treatment so there are no surprises. Shall I book you in?', ['Book an appointment']);
+      return;
+    }
     if (q.indexOf('insurance') > -1){
-      botSay('We work with ' + CFG.insurances.join(', ') + ', and we\'ll verify your coverage before any treatment so there are no surprises. Which one do you have?');
+      var unk = raw.match(/\b([A-Z][\w&]*(?: [A-Z][\w&]*)?)\s+[Ii]nsurance\b/);
+      if (unk){
+        botSay('<strong>' + unk[1] + '</strong> isn\'t one we bill directly — but you still have options. Many plans include out-of-network benefits we can verify for you before your visit, and our self-pay pricing is straightforward. Want me to book you in?', ['Book an appointment', 'See prices']);
+        return;
+      }
+      botSay('We work directly with <strong>' + CFG.insurances.join(', ') + '</strong>. If yours isn\'t on the list, you still have options: many plans include out-of-network benefits we can verify for you, and our self-pay pricing is straightforward. Which provider are you with?', CFG.insurances.concat(['Other']));
       return;
     }
     if (q.indexOf('new patient') > -1 || q.indexOf('first visit') > -1 || q.indexOf('first time') > -1){
