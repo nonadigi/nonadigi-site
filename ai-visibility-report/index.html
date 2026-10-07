@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Visibility Report — What AI Says About Your Business | Nona Digi</title>
+<meta name="description" content="A free, human-prepared AI Visibility Report shows how your business appears inside ChatGPT, Gemini, Perplexity and Google — and what it's costing you. Report + video walkthrough within 24 hours.">
+<link rel="canonical" href="https://nonadigi.com/ai-visibility-report/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Nona Digi">
+<meta property="og:title" content="AI Visibility Report — What AI Says About Your Business">
+<meta property="og:description" content="Free human-prepared report: how your business appears inside ChatGPT, Gemini, Perplexity and Google.">
+<meta property="og:url" content="https://nonadigi.com/ai-visibility-report/">
+<meta name="theme-color" content="#ff5818">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is the report really free?","acceptedAnswer":{"@type":"Answer","text":"Yes — one free report per business, prepared by a human and delivered within 24 hours with a personal video walkthrough."}},{"@type":"Question","name":"Is it automated software?","acceptedAnswer":{"@type":"Answer","text":"No. A person runs every check by hand, writes the findings, and records your personal walkthrough video."}},{"@type":"Question","name":"How is this different from a free SEO audit?","acceptedAnswer":{"@type":"Answer","text":"SEO audits grade your website for Google rankings. This grades your business for AI recommendations — what ChatGPT, Gemini and Perplexity actually say about you when customers ask."}}]}
+</script>
+<link rel="stylesheet" href="../css/styles.css">
+<style>
+  .crumb{font-size:13px;color:var(--muted);margin-bottom:18px}
+  .crumb a{color:var(--primary-deep);font-weight:600;text-decoration:none}
+  .plat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:36px}
+  .plat{background:#fff;border:1px solid var(--line);border-radius:18px;padding:26px 22px;text-align:center}
+  .plat .ic{font-size:30px;margin-bottom:12px}
+  .plat h4{font-size:16px;font-weight:800;margin-bottom:8px}
+  .plat p{font-size:13.5px;color:var(--muted);line-height:1.6}
+  .vs-table{width:100%;border-collapse:collapse;margin-top:36px;background:#fff;border:1px solid var(--line);border-radius:18px;overflow:hidden;font-size:15px}
+  .vs-table th,.vs-table td{padding:16px 20px;text-align:left;border-bottom:1px solid var(--line)}
+  .vs-table th{background:var(--navy);color:#fff;font-size:13px;letter-spacing:.06em;text-transform:uppercase}
+  .vs-table tr:last-child td{border-bottom:0}
+  .vs-table td:first-child{font-weight:700}
+  .sample{background:#fff;border:1px solid var(--line);border-radius:22px;padding:40px;margin-top:36px;box-shadow:0 24px 48px -28px rgba(14,22,36,.2)}
+  .sample .biz{font-size:20px;font-weight:800;margin-bottom:4px}
+  .sample .date{font-size:13px;color:var(--muted);margin-bottom:24px}
+  .score-row{display:flex;align-items:center;gap:16px;padding:13px 0;border-bottom:1px dashed var(--line);font-size:15px}
+  .score-row:last-child{border-bottom:0}
+  .score-row .name{flex:1;font-weight:600}
+  .score-bar{flex:2;height:10px;background:var(--cream);border-radius:99px;overflow:hidden}
+  .score-bar i{display:block;height:100%;border-radius:99px;background:var(--primary)}
+  .score-num{flex:0 0 52px;text-align:right;font-weight:800}
+  .sample .verdict{margin-top:24px;background:var(--tint2);border:1px dashed #ffd9bd;border-radius:14px;padding:20px 24px;font-size:15px;line-height:1.65;color:var(--ink)}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:48px;margin-top:36px;align-items:start}
+  .two-col h3{font-size:22px;font-weight:800;margin-bottom:12px;letter-spacing:-.01em}
+  .two-col p{font-size:16px;color:var(--muted);line-height:1.7;margin-bottom:14px}
+  .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center}
+  .snap{background:#fff;border:1px solid var(--line);border-radius:22px;box-shadow:0 30px 60px -30px rgba(14,22,36,.25);overflow:hidden}
+  .snap-head{background:var(--navy);color:#fff;padding:16px 22px;display:flex;align-items:center;gap:12px}
+  .snap-head .who{font-weight:700;font-size:14.5px}
+  .snap-head .who small{display:block;font-weight:500;color:#9fb0c7;font-size:11.5px}
+  .snap-body{padding:24px 24px 12px}
+  .snap-row{display:flex;align-items:center;gap:12px;padding:9px 0;font-size:14px}
+  .snap-row .n{flex:1;font-weight:600}
+  .snap-row .b{flex:1.4;height:9px;background:var(--cream);border-radius:99px;overflow:hidden}
+  .snap-row .b i{display:block;height:100%;border-radius:99px;background:var(--primary)}
+  .snap-row .v{flex:0 0 40px;text-align:right;font-weight:800;font-size:13px}
+  .snap-foot{padding:14px 24px 20px;font-size:12.5px;color:var(--muted);border-top:1px dashed #ffd9bd;margin-top:8px;background:var(--tint2)}
+  @media (max-width:920px){.plat-grid{grid-template-columns:1fr 1fr}.two-col{grid-template-columns:1fr}.hero-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="wrap nav-in">
+    <div class="logo">nona<span>digi</span></div>
+    <div class="nav-links">
+      <a href="/#demoWindow">Live demo</a><a href="/#work">Work</a><a href="/#services">Services</a><a href="/#faq">FAQ</a>
+    </div>
+    <a class="btn btn-primary btn-sm" href="#final-cta">Get my free report</a>
+  </div>
+</nav>
+<main id="main">
+
+<header class="hero">
+  <div class="wrap">
+    <div class="crumb"><a href="/">Home</a> &nbsp;›&nbsp; AI Visibility Report</div>
+    <div class="hero-grid">
+    <div>
+    <span class="eyebrow">AI Visibility Report</span>
+    <h1>When customers ask AI who to hire,<br>is it recommending <em>you?</em></h1>
+    <p class="lede">A free, human-prepared report showing exactly how your business appears inside ChatGPT, Gemini, Perplexity and Google — and what it's costing you. Delivered within 24 hours with a personal video walkthrough.</p>
+    <div class="hero-ctas">
+      <a class="btn btn-primary" href="/#audit">Get my free report →</a>
+      <a class="btn btn-ghost" href="#example">See an example report</a>
+    </div>
+    <div class="trust">
+      <span><i>✓</i>Free — one per business</span>
+      <span><i>✓</i>Prepared by a human, not software</span>
+      <span><i>✓</i>Report + video within 24 hours</span>
+    </div>
+    </div>
+    <div>
+      <div class="snap">
+        <div class="snap-head"><div class="who">AI Visibility Snapshot<small>Smith Dental Studio · Example</small></div></div>
+        <div class="snap-body">
+          <div class="snap-row"><span class="n">ChatGPT</span><span class="b"><i style="width:15%"></i></span><span class="v">1.5</span></div>
+          <div class="snap-row"><span class="n">Gemini</span><span class="b"><i style="width:25%"></i></span><span class="v">2.5</span></div>
+          <div class="snap-row"><span class="n">Perplexity</span><span class="b"><i style="width:10%"></i></span><span class="v">1.0</span></div>
+          <div class="snap-row"><span class="n">Google presence</span><span class="b"><i style="width:60%"></i></span><span class="v">6.0</span></div>
+          <div class="snap-row"><span class="n">After-hours capture</span><span class="b"><i style="width:10%"></i></span><span class="v">1.0</span></div>
+        </div>
+        <div class="snap-foot">A competitor with 3× the reviews is cited instead of you.</div>
+      </div>
+    </div>
+    </div>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <div class="two-col">
+      <div>
+        <div class="kicker">What it is</div>
+        <h3>What is an AI Visibility Report?</h3>
+        <p>It's a five-point audit of how your business shows up where customers now look first: inside AI assistants. We ask the questions your customers actually ask, document what each platform says about you — and about your competitors — and hand you an honest report in plain English.</p>
+        <p>No jargon, no automated scan. A person does the checks, writes the findings, and records you a personal walkthrough video.</p>
+      </div>
+      <div>
+        <div class="kicker">Why it matters</div>
+        <h3>What does "AI visibility" mean?</h3>
+        <p>AI visibility means being the business an AI assistant <strong>recommends</strong> when someone asks "who's the best dentist near me?" — not just a blue link on page two, but the named answer in the conversation.</p>
+        <p>Why it matters: customers increasingly skip search results entirely and act on the AI's recommendation. If you're invisible there, you're invisible at the exact moment they decide.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="background:var(--cream2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+  <div class="wrap">
+    <div class="kicker">What it measures</div>
+    <h2>Five checks. One honest picture.</h2>
+    <p class="sub">Every report runs the same five checks — the same ones we use to decide what to fix first.</p>
+    <ul class="audit-checks" style="max-width:860px">
+      <li><div class="ic">1</div><div><strong>AI visibility</strong><span>Are ChatGPT, Gemini &amp; Perplexity recommending you — or your competitor?</span></div></li>
+      <li><div class="ic">2</div><div><strong>Google presence</strong><span>Profile strength, review count vs. nearby competitors, photo freshness.</span></div></li>
+      <li><div class="ic">3</div><div><strong>Website fundamentals</strong><span>Speed, mobile experience, and how hard it is to book you.</span></div></li>
+      <li><div class="ic">4</div><div><strong>After-hours capture</strong><span>We visit your site at 11 PM and document exactly what a customer experiences.</span></div></li>
+      <li><div class="ic">5</div><div><strong>Review velocity</strong><span>Are you earning reviews every week — or standing still while rivals pull ahead?</span></div></li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="kicker">Platforms checked</div>
+    <h2>Where we look.</h2>
+    <p class="sub">We check your business inside the AI assistants your customers actually use — with the questions they'd actually ask.</p>
+    <div class="plat-grid">
+      <div class="plat"><div class="ic">💬</div><h4>ChatGPT</h4><p>The world's most-used AI assistant. We test local recommendation prompts the way a customer would ask.</p></div>
+      <div class="plat"><div class="ic">✨</div><h4>Gemini</h4><p>Google's AI, woven into Search and Android. We check both direct answers and AI Overviews.</p></div>
+      <div class="plat"><div class="ic">🔎</div><h4>Perplexity</h4><p>The answer engine built on cited sources. We see who it cites — you, or someone else.</p></div>
+      <div class="plat"><div class="ic">🪟</div><h4>Copilot</h4><p>Microsoft's AI across Windows and Edge. Another front door customers walk through.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="dark">
+  <div class="wrap" style="padding:20px 28px">
+    <div class="kicker" style="color:#ffb96d">How it works</div>
+    <h2>From request to report<br>in 24 hours.</h2>
+    <div class="steps" style="margin-top:36px">
+      <div class="step" style="background:#1d293d;border-color:#2c3a52"><div class="num">STEP 01</div><h4 style="color:#fff">Request your report</h4><p style="color:#9fb0c8">Thirty seconds: your name, business, website, email. One free report per business.</p></div>
+      <div class="step" style="background:#1d293d;border-color:#2c3a52"><div class="num">STEP 02</div><h4 style="color:#fff">We do the digging</h4><p style="color:#9fb0c8">A human runs all five checks by hand — AI platforms, Google, your website at 11 PM, your reviews.</p></div>
+      <div class="step" style="background:#1d293d;border-color:#2c3a52"><div class="num">STEP 03</div><h4 style="color:#fff">Report + video walkthrough</h4><p style="color:#9fb0c8">Within 24 hours: your written report plus a personal 2–3 minute video walking you through it.</p></div>
+    </div>
+    <div class="two-col" style="margin-top:44px">
+      <div>
+        <h3 style="color:#fff">What you receive</h3>
+        <p style="color:#9fb0c8">Your five-point report in plain English, a personal video walkthrough, and — if you want everything fixed — a walkthrough call where we talk founding-client pricing. Your report slot is held for 48 hours. No payment today.</p>
+      </div>
+      <div>
+        <h3 style="color:#fff">How often is it measured?</h3>
+        <p style="color:#9fb0c8">The free report is a one-time snapshot — your baseline. Businesses on our AI Visibility Engine get re-measured monthly, so you can watch yourself climb past competitors inside the AI answers.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="kicker">SEO vs AI visibility</div>
+    <h2>How is this different<br>from traditional SEO?</h2>
+    <p class="sub">SEO fights for position in a list of links. AI visibility fights to <strong>be the answer</strong>. Different game, different rules.</p>
+    <table class="vs-table">
+      <tr><th></th><th>Traditional SEO</th><th>AI visibility</th></tr>
+      <tr><td>The goal</td><td>Rank on page one of Google</td><td>Be recommended inside AI answers</td></tr>
+      <tr><td>The customer sees</td><td>Ten blue links to choose from</td><td>One or two named recommendations</td></tr>
+      <tr><td>What wins</td><td>Keywords, backlinks, technical health</td><td>Clear facts AI can cite: services, pricing, reviews, location</td></tr>
+      <tr><td>Reviews</td><td>Helpful for the map pack</td><td>Directly quoted by AI as proof</td></tr>
+      <tr><td>Measurement</td><td>Rankings and traffic</td><td>Share of AI recommendations</td></tr>
+    </table>
+  </div>
+</section>
+
+<section style="background:var(--cream2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+  <div class="wrap">
+    <div class="kicker">Improving it</div>
+    <h2>How do you improve<br>a company's AI visibility?</h2>
+    <p class="sub">Four levers, in order of impact. This is exactly what our AI Visibility Engine does every month.</p>
+    <div class="steps">
+      <div class="step"><div class="num">01</div><h4>Say citable things</h4><p>AI recommends businesses it can describe precisely. Clear services, real pricing, specific locations — published where AI reads.</p></div>
+      <div class="step"><div class="num">02</div><h4>Earn reviews weekly</h4><p>AI assistants quote review counts and ratings as evidence. A steady stream beats a five-year-old 5.0.</p></div>
+      <div class="step"><div class="num">03</div><h4>Fix the fundamentals</h4><p>Fast, mobile-friendly, easy to book. AI won't recommend a business whose website frustrates the customer it sends.</p></div>
+      <div class="step"><div class="num">04</div><h4>Track it monthly</h4><p>Re-measure inside the AI platforms, watch competitors, and adjust. Visibility compounds — or decays.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="example">
+  <div class="wrap">
+    <div class="kicker">Example report</div>
+    <h2>What a report looks like.</h2>
+    <p class="sub">Fictional example — "Smith Dental Studio," a two-location dental practice in Orlando.</p>
+    <div class="sample">
+      <div class="biz">Smith Dental Studio — AI Visibility Report</div>
+      <div class="date">Prepared October 2026 · Fictional example</div>
+      <div class="score-row"><span class="name">AI visibility</span><span class="score-bar"><i style="width:20%"></i></span><span class="score-num">2/10</span></div>
+      <div class="score-row"><span class="name">Google presence</span><span class="score-bar"><i style="width:60%"></i></span><span class="score-num">6/10</span></div>
+      <div class="score-row"><span class="name">Website fundamentals</span><span class="score-bar"><i style="width:50%"></i></span><span class="score-num">5/10</span></div>
+      <div class="score-row"><span class="name">After-hours capture</span><span class="score-bar"><i style="width:10%"></i></span><span class="score-num">1/10</span></div>
+      <div class="score-row"><span class="name">Review velocity</span><span class="score-bar"><i style="width:40%"></i></span><span class="score-num">4/10</span></div>
+      <div class="verdict"><strong>The headline:</strong> no AI platform recommends Smith Dental Studio by name — a competitor with 3x the reviews is cited instead. After 8 PM, the website offers no way to book, so every evening search leaks to whoever answers. Fixing after-hours capture and review velocity first would move the needle fastest.</div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="kicker">FAQ</div>
+    <h2>Fair questions.</h2>
+    <div class="faq">
+      <div class="qa"><h4>Is the report really free?</h4><p>Yes — one free report per business. It's how we start every relationship: you see exactly where you stand before spending a dollar.</p></div>
+      <div class="qa"><h4>Is it automated software?</h4><p>No. A person runs every check by hand, writes the findings, and records your personal walkthrough video. That's why it takes up to 24 hours — and why it's honest.</p></div>
+      <div class="qa"><h4>Will you share my report with competitors?</h4><p>Never. Your report is yours alone. We never share client details, with or without names attached.</p></div>
+      <div class="qa"><h4>What happens after I get the report?</h4><p>Nothing, unless you want it to. If you want everything fixed, we'll talk on a walkthrough call about founding-client pricing. No pressure, no drip campaign.</p></div>
+      <div class="qa"><h4>How is this different from a free SEO audit?</h4><p>SEO audits grade your website for Google's rankings. This grades your business for AI's recommendations — what ChatGPT, Gemini and Perplexity actually say about you when customers ask.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="final-cta">
+  <div class="final" style="margin-bottom:90px">
+    <h2>Find out what AI says about you. Free.</h2>
+    <p>Five checks, one honest report, zero jargon. Prepared by a human, delivered within 24 hours with a personal video walkthrough.</p>
+    <a class="btn btn-white" href="/#audit">Get my free report →</a>
+  </div>
+</section>
+
+</main>
+<footer>
+  <div class="wrap foot-in">
+    <div class="logo" style="color:#fff">nona<span style="color:var(--primary)">digi</span></div>
+    <div>(689) 302-0209 · nonadigi.com</div>
+  </div>
+</footer>
+</body>
+</html>
