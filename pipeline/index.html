@@ -217,7 +217,7 @@ function render(){
     for (const l of items){
       const ageH = hrsSince(l.stage_changed_at);
       const card = document.createElement("div"); card.className = "card";
-      let badges = `<span class="badge b-src">${l.source === "audit_form" ? "Audit form" : "Receptionist"}</span>`;
+      let badges = `<span class="badge b-src">${l.source === "audit_form" ? "Audit form" : "Chat"}</span>`;
       // time in stage
       const over = (key === "audit_in_progress" && ageH > 18) || (ageH > 96 && !["won","lost"].includes(key));
       badges += `<span class="badge b-time${over ? " over" : ""}">${fmtAge(ageH)} in stage</span>`;
