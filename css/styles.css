@@ -76,8 +76,8 @@
   .offer.hero-offer{border:2px solid var(--primary);box-shadow:0 24px 48px -24px rgba(255,88,24,.35)}
   .offer .flag{position:absolute;top:20px;right:20px;font-size:11.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;background:var(--primary);color:#fff;padding:6px 12px;border-radius:999px}
   .offer h3{font-size:24px;font-weight:800;letter-spacing:-.02em;margin:14px 0 10px}
-  .offer h3 .h-link{color:var(--primary-deep);text-decoration:none}
-  .offer h3 .h-link:hover{text-decoration:underline}
+  .read-more{color:var(--primary-deep);font-weight:700;font-size:14.5px;text-decoration:none}
+  .read-more:hover{text-decoration:underline}
   .offer .icon{width:52px;height:52px;border-radius:15px;display:flex;align-items:center;justify-content:center;font-size:25px}
   .offer ul{list-style:none;margin:20px 0 26px}
   .offer li{font-size:15px;color:var(--muted);line-height:1.6;padding:9px 0 9px 30px;position:relative;border-bottom:1px dashed var(--line)}
