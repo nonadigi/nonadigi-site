@@ -17,8 +17,9 @@
   12 months). Standard: $1,200 setup + $299/month.
 
 ### AI Visibility Engine
-- Answer-engine optimization + SEO for the AI-search era: become the business
-  ChatGPT, Gemini, Perplexity, and Google recommend.
+- Answer engine optimization (AEO) + generative engine optimization (GEO) for
+  the AI-search era: become the business ChatGPT, Gemini, Perplexity, and
+  Google recommend.
 - AI-search audit, content engineered to be cited by AI assistants, local SEO
   (Maps, reviews, location authority), monthly visibility report in plain English.
 - Founding price: $540/month (after 40% discount, rate locked 12 months).
@@ -34,6 +35,9 @@ to send them customers instead of competitors.
 - [Live demo](https://nonadigi.com/#demo): try the AI Chat Receptionist on a fictional dental clinic.
 - [Free AI visibility audit](https://nonadigi.com/#audit): request a 5-point AI visibility report.
 - [FAQ](https://nonadigi.com/#faq): common questions about the AI Chat Receptionist.
+- [AI Chat Receptionist](https://nonadigi.com/ai-chat-receptionist/): product deep-dive — chatbot vs answering service, onboarding, FAQs.
+- [AI Visibility Report](https://nonadigi.com/ai-visibility-report/): what the free 5-point report measures and how AI visibility differs from SEO.
+- [Blog](https://nonadigi.com/blog/): practical AI visibility and chat receptionist guides for local businesses.
 
 ## Contact
 - Phone: (689) 302-0209
