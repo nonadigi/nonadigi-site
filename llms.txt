@@ -1,13 +1,13 @@
 # Nona Digi
 
 > Nona Digi is an AI digital marketing agency based in Orlando, Florida, serving
-> businesses across the US. We build AI Receptionists — AI chatbots for websites
+> businesses across the US. We build AI Chat Receptionists — AI chatbots for websites
 > that answer, qualify, and book appointments 24/7 — and AI Visibility Engines
 > that get businesses cited and recommended by ChatGPT, Gemini, and Perplexity.
 
 ## Products
 
-### AI Receptionist
+### AI Chat Receptionist
 - A 24/7 AI front desk for your website, WhatsApp, and SMS.
 - Answers questions in your voice, qualifies leads, and books straight into your
   calendar — while you work, sleep, or serve the customer in front of you.
@@ -30,10 +30,10 @@ to send them customers instead of competitors.
 
 ## Key pages
 - [Homepage](https://nonadigi.com/): Nona Digi overview, live demos, and founding offer.
-- [Services and pricing](https://nonadigi.com/#services): AI Receptionist and AI Visibility Engine plans.
-- [Live demo](https://nonadigi.com/#demo): try the AI Receptionist on a fictional dental clinic.
+- [Services and pricing](https://nonadigi.com/#services): AI Chat Receptionist and AI Visibility Engine plans.
+- [Live demo](https://nonadigi.com/#demo): try the AI Chat Receptionist on a fictional dental clinic.
 - [Free AI visibility audit](https://nonadigi.com/#audit): request a 5-point AI visibility report.
-- [FAQ](https://nonadigi.com/#faq): common questions about the AI Receptionist.
+- [FAQ](https://nonadigi.com/#faq): common questions about the AI Chat Receptionist.
 
 ## Contact
 - Phone: (689) 302-0209
