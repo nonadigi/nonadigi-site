@@ -331,6 +331,7 @@ document.querySelectorAll('a[href^="#"]').forEach(function(a){
   }
   function sendUser(text){
     if (!text.trim()) return;
+    greeted = true;
     addMsg(text.replace(/</g, '&lt;'), 'user');
     input.value = '';
     setTimeout(function(){ reply(text); }, 300);
@@ -439,6 +440,10 @@ document.querySelectorAll('a[href^="#"]').forEach(function(a){
       botSay('Just to confirm — cancel your appointment' + (booking.service ? ' for ' + booking.service : '') + ' on <strong>' + booking.day + ' at ' + booking.time + '</strong>?', ['Yes, cancel it', 'No, keep it']);
       return;
     }
+    if (/^(hi|hey|hello|hiya|howdy|yo|greetings|good morning|good afternoon|good evening)\b/.test(q)){
+      botSay('Hi there! Looking for a dentist in Lake Nona? I can answer questions about our services and prices, check availability, and book you in — what can I do for you?', STD);
+      return;
+    }
     if (q.indexOf('reschedule') > -1 || q.indexOf('change my appointment') > -1 || q.indexOf('move my appointment') > -1 || q.indexOf('different day') > -1 || q.indexOf('different time') > -1){
       if (!hasBooking){ botSay('It doesn\'t look like you have an appointment booked yet — want to book one now?', ['Book an appointment']); return; }
       state = 'await_resched_day';
@@ -501,14 +506,15 @@ document.querySelectorAll('a[href^="#"]').forEach(function(a){
   document.getElementById('demoSend').onclick = function(){ sendUser(input.value); };
   input.addEventListener('keydown', function(e){ if (e.key === 'Enter') sendUser(input.value); });
   document.getElementById('talkCta').addEventListener('click', function(){ setTimeout(function(){ input.focus(); }, 600); });
-  /* Auto-greet only when the demo scrolls into view: keeps greeting-triggered
-     layout work out of the initial page-load window (Speed Index / forced reflows). */
+  /* Auto-greet when the interactive hero demo scrolls into view: keeps
+     greeting-triggered layout work out of the initial page-load window
+     (Speed Index / forced reflows). */
   function autoGreet(){
     if (greeted) return;
     greeted = true;
     botSay('Hi! Looking for a dentist in Lake Nona? I can answer questions, check availability, and book you in — what do you need?', ['Book an appointment', 'See prices', 'Opening hours'], 600);
   }
-  var demoEl = document.getElementById('demoWindow');
+  var demoEl = document.getElementById('heroChat');
   if ('IntersectionObserver' in window && demoEl){
     var io = new IntersectionObserver(function(entries){
       if (entries[0].isIntersecting){ autoGreet(); io.disconnect(); }
