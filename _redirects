@@ -1,0 +1,3 @@
+# Redirects for nonadigi.com (Cloudflare Pages)
+/ai-receptionist/ /ai-chat-receptionist/ 301
+/ai-receptionist/* /ai-chat-receptionist/:splat 301
