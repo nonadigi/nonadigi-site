@@ -155,7 +155,15 @@
   .final p{color:#ffe3d3;margin:16px auto 32px;max-width:900px;font-size:17px;line-height:1.65}
   .btn-white{background:#fff;color:var(--primary-deep)}
   footer{background:var(--navy);color:#9fb0c8;padding:44px 0;font-size:13.5px}
-  .foot-in{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+  .foot-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:32px;padding:6px 0 30px}
+  .foot-brand p{color:#9fb0c8;font-size:13.5px;line-height:1.65;margin:14px 0 10px}
+  .foot-brand .tel{color:#fff;font-size:14.5px;font-weight:600;text-decoration:none}
+  footer nav{position:static;background:none;border:none;backdrop-filter:none;z-index:auto}
+  footer nav h4{color:#fff;font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;margin:4px 0 14px}
+  footer nav a{display:block;color:#9fb0c8;font-size:14px;margin:0 0 11px;text-decoration:none}
+  footer nav a:hover{color:#fff}
+  .foot-base{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;border-top:1px solid #1e293b;padding-top:22px;color:#64748b;font-size:12.5px}
+  @media(max-width:720px){.foot-grid{grid-template-columns:1fr 1fr}}
   /* NONA floating assistant (orange = Nona Digi brand) */
   #nonaFab{position:fixed;right:24px;bottom:24px;z-index:200;width:62px;height:62px;border-radius:50%;border:none;cursor:pointer;background:linear-gradient(135deg,var(--primary),#ff8a4d);color:#fff;box-shadow:0 14px 30px -8px rgba(255,88,24,.55);display:flex;align-items:center;justify-content:center;transition:transform .18s}
   #nonaFab:hover{transform:scale(1.07)}
