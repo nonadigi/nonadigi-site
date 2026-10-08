@@ -245,6 +245,25 @@ document.getElementById('auditForm').addEventListener('submit', function(e){
   if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Sending\u2026'; }
   if (netErr) netErr.style.display = 'none';
   if (!window.NONADIGI_FORMSPREE) { showFormError(); return; }
+  /* Also create the Supabase lead row (source='audit_form') so the follow-up
+     worker picks this lead up. Fire-and-forget with a timeout: it never blocks
+     the Formspree submit or the success state, and the function dedupes
+     repeat submissions by email (24h window). */
+  (function captureLead(){
+    try {
+      var ctrl = new AbortController();
+      var timer = setTimeout(function(){ ctrl.abort(); }, 8000);
+      fetch('https://ohwnsrwjdzigzceisker.supabase.co/functions/v1/capture_audit_lead', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ bot_id: 'nona-digi', name: name, email: em,
+          phone: phone, business: biz, website: web,
+          request: claimMode ? ('Founding slot ' + claimSlot + ' of 3') : 'Free AI visibility audit' }),
+        signal: ctrl.signal
+      }).then(function(){ clearTimeout(timer); })
+        .catch(function(err){ clearTimeout(timer); console.warn('lead capture skipped:', err && err.message); });
+    } catch (err) { console.warn('lead capture skipped:', err && err.message); }
+  })();
   fetch(window.NONADIGI_FORMSPREE, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
