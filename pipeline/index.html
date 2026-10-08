@@ -236,7 +236,7 @@ function render(){
         sla.push(`<b>${esc(l.name || "Unnamed")}</b> — audit in progress ${fmtAge(ageH)}. Your <b>24h report promise</b> has ${Math.max(0, Math.round(24 - ageH))}h left.`);
       if (over && !["won","lost"].includes(key)) card.classList.add(ageH > 96 ? "stale" : "hot");
       if (key === "won") card.classList.add("won");
-      if (l.product_lean) badges += `<span class="badge b-prod">${l.product_lean === "engine" ? "Engine lean" : "Receptionist lean"}</span>`;
+      if (l.product_lean) badges += `<span class="badge b-prod">${l.product_lean === "engine" ? "Engine" : "AI Chat"}</span>`;
       if (ageH > 96 && !["won","lost"].includes(key)) cold.push(l);
       card.innerHTML = `<div class="biz">${esc(l.name || "Unnamed lead")}</div>
         <div class="who">${esc(l.service || "")}${l.phone ? " · " + esc(l.phone) : ""}</div>
