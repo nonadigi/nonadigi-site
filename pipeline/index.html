@@ -276,8 +276,13 @@ $("modal").onclick = e => { if (e.target.id === "modal") $("modal").classList.re
 $("mSave").onclick = async () => {
   const btn = $("mSave"); btn.disabled = true; btn.textContent = "Saving…";
   try {
-    await api("PATCH", { id: selectedId, stage: $("mStage").value,
-      product_lean: $("mLean").value || null });
+    const l = leads.find(x => x.id === selectedId);
+    const lean = $("mLean").value || null;
+    let stage = $("mStage").value;
+    // setting a product lean on a fresh capture means the audit is underway
+    if (l && l.stage === "captured" && stage === "captured" && lean)
+      stage = "audit_in_progress";
+    await api("PATCH", { id: selectedId, stage, product_lean: lean });
     $("modal").classList.remove("show");
     await load();
   } catch(e){ alert("Save failed: " + e.message); }
