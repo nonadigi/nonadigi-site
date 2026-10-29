@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Client Admin — Nona Digi</title>
+<style>
+  :root{
+    --cream:#faf6ef; --ink:#1c2b3a; --muted:#6b7a8d; --line:#e8e0d2;
+    --orange:#e8730c; --orange-soft:#fdeede; --green:#1e8e4d; --green-soft:#e3f4e9;
+    --red:#c93a3a; --red-soft:#fdecec; --amber:#b97a0c; --amber-soft:#fdf3e0;
+    --card:#fff; --navy:#16324a;
+  }
+  *{box-sizing:border-box; margin:0; padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif; background:var(--cream); color:var(--ink); padding:28px; font-size:14px}
+  .wrap{max-width:1180px; margin:0 auto}
+  .topbar{display:flex; justify-content:space-between; align-items:center; margin-bottom:6px}
+  .topbar h1{font-size:22px}
+  .topbar h1 small{display:block; font-size:12px; color:var(--muted); font-weight:500; margin-top:2px}
+  .pill{font-size:12px; font-weight:700; padding:6px 14px; border-radius:99px; background:var(--green-soft); color:var(--green)}
+  .tabs{display:flex; gap:6px; margin:18px 0; border-bottom:2px solid var(--line)}
+  .tab{padding:10px 18px; font-size:14px; font-weight:700; color:var(--muted); cursor:pointer; border-bottom:3px solid transparent; margin-bottom:-2px}
+  .tab.active{color:var(--ink); border-bottom-color:var(--orange)}
+  .tab .badge{display:inline-block; min-width:20px; text-align:center; font-size:11px; background:var(--orange); color:#fff; border-radius:99px; padding:1px 6px; margin-left:6px}
+  .panel{display:none}
+  .panel.active{display:block}
+  .card{background:var(--card); border:1px solid var(--line); border-radius:14px; padding:16px 18px; margin-bottom:12px}
+  .row{display:flex; justify-content:space-between; align-items:center; gap:12px}
+  .muted{color:var(--muted); font-size:12.5px}
+  .btn{border:none; border-radius:10px; padding:9px 16px; font-size:13px; font-weight:700; cursor:pointer}
+  .btn.primary{background:var(--orange); color:#fff}
+  .btn.ghost{background:#f3eee2; color:var(--ink)}
+  .btn.green{background:var(--green); color:#fff}
+  .btn.red{background:#fff; color:var(--red); border:1px solid #f3c8c8}
+  .btn.sm{padding:6px 12px; font-size:12px}
+  .btn:disabled{opacity:.55; cursor:default}
+  .conv-detail{display:none; margin-top:14px; border-top:1px dashed var(--line); padding-top:14px}
+  .conv-detail.show{display:block}
+  .msg{max-width:75%; padding:9px 13px; border-radius:14px; margin-bottom:8px; font-size:13.5px; line-height:1.45; word-wrap:break-word}
+  .msg.user{background:#eef2f7; border-bottom-left-radius:4px}
+  .msg.bot{background:var(--orange-soft); margin-left:auto; border-bottom-right-radius:4px}
+  .qcard{border-left:4px solid var(--amber)}
+  .qcard .q{font-weight:700; font-size:14.5px}
+  .qcard .ctx{font-size:12.5px; color:var(--muted); margin:6px 0 10px; font-style:italic}
+  .count{font-size:11px; font-weight:700; background:var(--amber-soft); color:var(--amber); border-radius:99px; padding:2px 9px; margin-left:8px}
+  .editor{display:none; margin-top:12px}
+  .editor.show{display:block}
+  .editor textarea{width:100%; min-height:90px; border:1px solid var(--line); border-radius:10px; padding:10px; font-size:13.5px; font-family:inherit; margin:8px 0}
+  .krow{display:flex; justify-content:space-between; align-items:center; gap:10px; padding:10px 0; border-bottom:1px solid #f3eee2}
+  .krow:last-child{border-bottom:none}
+  .src{font-size:10.5px; font-weight:700; padding:2px 8px; border-radius:99px; background:#e8eef5; color:#33566f; white-space:nowrap}
+  .src.learned{background:#e9e4f7; color:#5b4a9e}
+  .note{background:#fff; border:1px dashed var(--line); border-radius:12px; padding:12px 16px; font-size:12.5px; color:var(--muted); margin-top:18px}
+  .draft-note{font-size:12.5px; background:var(--amber-soft); color:#7c5a10; border-radius:8px; padding:8px 12px; margin:8px 0}
+  .flabel{display:block; font-size:11.5px; font-weight:700; color:var(--muted); margin-top:8px}
+  .faqrow{border-bottom:1px solid #f3eee2; padding:10px 0}
+  .faqrow:last-child{border-bottom:none}
+  .faqrow textarea{width:100%; border:1px solid var(--line); border-radius:10px; padding:9px 10px; font-size:13.5px; font-family:inherit; margin:4px 0}
+  .empty{text-align:center; color:#b3a98f; font-size:13px; padding:34px 0}
+  .err{background:var(--red-soft); border:1px solid #f3c8c8; color:var(--red); border-radius:12px; padding:14px 18px; margin-bottom:18px; display:none}
+  .loginwrap{position:fixed; inset:0; background:var(--cream); display:none; align-items:center; justify-content:center; z-index:200}
+  .loginwrap.show{display:flex}
+  .logincard{background:#fff; border:1px solid var(--line); border-radius:16px; padding:32px; width:360px; max-width:92vw; box-shadow:0 8px 30px rgba(20,30,45,.08)}
+  .logincard h2{font-size:20px} .logincard .sub{font-size:12.5px; color:var(--muted); margin:4px 0 16px}
+  .logincard label{display:block; font-size:12px; font-weight:700; margin:12px 0 4px}
+  .logincard input{width:100%; padding:10px; border:1px solid var(--line); border-radius:10px; font-size:14px}
+  .loginmsg{font-size:13px; color:var(--red); min-height:18px}
+  .signout{background:none; border:1px solid var(--line); border-radius:99px; padding:6px 14px; font-size:12px; color:var(--muted); cursor:pointer}
+  .signout:hover{color:var(--ink); border-color:var(--muted)}
+  .refresh{font-size:12px; color:var(--muted); text-align:right; margin-top:14px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="topbar">
+    <h1 id="bizName">Client admin <small>loading…</small></h1>
+    <span><span class="pill" style="margin-right:10px">● Bot live</span><button class="signout" id="signout" style="display:none">Sign out</button></span>
+  </div>
+  <div class="err" id="err"></div>
+
+  <div class="tabs">
+    <div class="tab active" data-tab="convs">Conversations</div>
+    <div class="tab" data-tab="leads">Leads</div>
+    <div class="tab" data-tab="knowledge">Knowledge review <span class="badge" id="kBadge" style="display:none"></span></div>
+  </div>
+
+  <div class="panel active" id="p-convs"></div>
+  <div class="panel" id="p-leads"></div>
+  <div class="panel" id="p-knowledge"></div>
+  <div class="refresh" id="refreshNote"></div>
+</div>
+
+<div class="loginwrap" id="login">
+  <div class="logincard">
+    <h2>Client admin</h2>
+    <p class="sub">Your AI Chat Receptionist dashboard — sign in to continue</p>
+    <div class="loginmsg" id="loginMsg"></div>
+    <label>Email</label>
+    <input type="email" id="loginEmail" autocomplete="username" placeholder="you@yourbusiness.com">
+    <label>Password</label>
+    <input type="password" id="loginPw" autocomplete="current-password" placeholder="••••••••">
+    <button class="btn primary" id="loginBtn" style="width:100%;margin-top:18px;padding:12px">Sign in</button>
+  </div>
+</div>
+
+<script>
+// ================= CONFIG =================
+const ADMIN_API = "https://ohwnsrwjdzigzceisker.supabase.co/functions/v1/client-admin";
+const SUPABASE_AUTH_URL = "https://ohwnsrwjdzigzceisker.supabase.co/auth/v1";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9od25zcndqZHppZ3pjZWlza2VyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTEyMzQzNDksImV4cCI6MjEwNjgxMDM0OX0.Lp_hcHPBRBCeJxCIIgpKpeUGTLSdhG3FrbDTkYSu2NA"; // public key, safe for browsers
+// ==========================================
+
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? "").replace(/</g,"&lt;");
+let accessToken = sessionStorage.getItem("client_admin_token") || null;
+let data = null;
+
+function fmtTime(ts){
+  const d = new Date(ts), now = new Date();
+  const time = d.toLocaleTimeString([], {hour:"numeric", minute:"2-digit"});
+  const day = d.toDateString() === now.toDateString() ? "Today"
+    : (new Date(now - 864e5).toDateString() === d.toDateString() ? "Yesterday"
+    : d.toLocaleDateString([], {month:"short", day:"numeric"}));
+  return `${day}, ${time}`;
+}
+
+async function api(method, body){
+  const r = await fetch(ADMIN_API, {
+    method, headers: { "Content-Type":"application/json", "Authorization": "Bearer " + accessToken },
+    body: body ? JSON.stringify(body) : undefined
+  });
+  if (r.status === 401){ showLogin("Session expired — please sign in again."); throw new Error("signed out"); }
+  if (!r.ok){ const j = await r.json().catch(()=>({})); throw new Error(j.error || ("API " + r.status)); }
+  return r.json();
+}
+
+function showLogin(msg){
+  accessToken = null; sessionStorage.removeItem("client_admin_token");
+  $("signout").style.display = "none";
+  if (msg) $("loginMsg").textContent = msg;
+  $("login").classList.add("show");
+}
+
+async function doLogin(){
+  const email = $("loginEmail").value.trim(), pw = $("loginPw").value;
+  const btn = $("loginBtn"); btn.disabled = true; btn.textContent = "Signing in…";
+  try {
+    const r = await fetch(SUPABASE_AUTH_URL + "/token?grant_type=password", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "apikey": SUPABASE_ANON_KEY },
+      body: JSON.stringify({ email, password: pw })
+    });
+    if (!r.ok) throw new Error("Invalid email or password.");
+    const j = await r.json();
+    accessToken = j.access_token;
+    sessionStorage.setItem("client_admin_token", accessToken);
+    $("login").classList.remove("show");
+    $("loginMsg").textContent = "";
+    $("loginPw").value = "";
+    $("signout").style.display = "";
+    await load();
+  } catch(e){ $("loginMsg").textContent = e.message; }
+  btn.disabled = false; btn.textContent = "Sign in";
+}
+$("loginBtn").onclick = doLogin;
+$("loginPw").addEventListener("keydown", e => { if (e.key === "Enter") doLogin(); });
+$("signout").onclick = () => showLogin();
+
+document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () => {
+  document.querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
+  document.querySelectorAll('.panel').forEach(x => x.classList.remove('active'));
+  t.classList.add('active');
+  $("p-" + t.dataset.tab).classList.add('active');
+}));
+
+async function load(){
+  if (!accessToken){ showLogin(); return; }
+  try {
+    data = await api("GET");
+    render();
+    $("err").style.display = "none";
+    $("refreshNote").textContent = "Last refreshed " + new Date().toLocaleTimeString();
+  } catch(e){
+    if (e.message === "signed out") return;
+    const el = $("err"); el.style.display = "block";
+    el.textContent = "Couldn't load your dashboard: " + e.message;
+  }
+}
+
+function render(){
+  $("bizName").innerHTML = esc(data.bot.name) + " <small>Client admin</small>";
+
+  // ---- Conversations ----
+  const msgsByConv = {};
+  for (const m of data.messages){
+    (msgsByConv[m.conversation_id] = msgsByConv[m.conversation_id] || []).push(m);
+  }
+  const pc = $("p-convs");
+  if (!data.conversations.length) pc.innerHTML = `<div class="empty">No conversations yet — they'll appear here when visitors chat with your bot.</div>`;
+  else pc.innerHTML = data.conversations.map((c, i) => {
+    const msgs = msgsByConv[c.id] || [];
+    const last = msgs[msgs.length - 1];
+    const preview = last ? esc(String(last.content).slice(0, 80)) : "";
+    const transcript = msgs.map(m =>
+      `<div class="msg ${m.role === "user" ? "user" : "bot"}">${esc(m.content)}</div>`).join("");
+    return `<div class="card">
+      <div class="row">
+        <div><strong>Session ${esc(c.session_id.slice(0, 8))}…</strong>
+          <span class="muted"> · ${msgs.length} messages</span><br>
+          <span class="muted">${fmtTime(c.created_at)}${preview ? ` · “${preview}”` : ""}</span></div>
+        <button class="btn ghost sm" onclick="document.getElementById('cd${i}').classList.toggle('show')">View</button>
+      </div>
+      <div class="conv-detail" id="cd${i}">${transcript || '<span class="muted">No messages.</span>'}</div>
+    </div>`;
+  }).join("");
+
+  // ---- Leads ----
+  const pl = $("p-leads");
+  if (!data.leads.length) pl.innerHTML = `<div class="empty">No leads yet — contact details visitors share will land here.</div>`;
+  else pl.innerHTML = data.leads.map(l => {
+    const contact = [l.phone, l.email].filter(Boolean).map(esc).join(" · ");
+    const what = [l.service, l.notes].filter(Boolean).map(esc).join(" — ");
+    return `<div class="card"><div class="row">
+      <div><strong>${esc(l.name || "Unnamed visitor")}</strong>${contact ? ` <span class="muted">· ${contact}</span>` : ""}<br>
+        <span class="muted">${what || "Shared contact info"} · ${fmtTime(l.created_at)}</span></div>
+      <span class="pill">New</span>
+    </div></div>`;
+  }).join("");
+
+  // ---- Knowledge review ----
+  const pk = $("p-knowledge");
+  const badge = $("kBadge");
+  if (data.unanswered.length){ badge.style.display = ""; badge.textContent = data.unanswered.length; }
+  else badge.style.display = "none";
+  let html = "";
+  if (!data.unanswered.length)
+    html += `<div class="card"><div class="empty" style="padding:18px">Nothing waiting — every visitor question so far had an answer. 🎉</div></div>`;
+  for (const q of data.unanswered){
+    const hasDraft = !!(q.draft_answer && q.draft_answer.trim());
+    html += `<div class="card qcard" id="q-${q.id}">
+      <div><span class="q">"${esc(q.question)}"</span><span class="count">asked ${q.ask_count}×</span></div>
+      ${q.context ? `<div class="ctx">Context: ${esc(String(q.context).slice(0, 220))}</div>` : ""}
+      ${hasDraft ? `<div class="draft-note">A draft answer was written from your business facts. Check it, edit if needed, then publish.</div>`
+        : (q.drafted_at ? `<div class="draft-note">No draft could be written from your current facts, so this one needs a hand-written answer.</div>` : "")}
+      <div class="row">
+        <span class="muted">${hasDraft ? "The draft is ready below — publishing makes it live." : "Write the approved answer once — the bot uses it from then on."}</span>
+        <span>
+          <button class="btn green sm" onclick="document.getElementById('e-${q.id}').classList.toggle('show')">${hasDraft ? "Review drafted answer" : "Approve &amp; write answer"}</button>
+          <button class="btn red sm" onclick="dismissQ('${q.id}', this)">Dismiss</button>
+        </span>
+      </div>
+      <div class="editor" id="e-${q.id}">
+        <textarea id="t-${q.id}" placeholder="Type the approved answer…">${esc(q.draft_answer || "")}</textarea>
+        <button class="btn primary sm" onclick="publishQ('${q.id}', this)">Publish answer</button>
+        <button class="btn ghost sm" onclick="redraftQ('${q.id}', this)">Re-draft from facts</button>
+      </div>
+    </div>`;
+  }
+  html += `<h3 style="margin:22px 0 10px; font-size:15px">Approved answers <span class="muted">(${data.knowledge.length})</span></h3>`;
+  html += `<div class="card">` + (data.knowledge.length
+    ? data.knowledge.map(k =>
+        `<div class="krow" id="k-${k.id}">
+          <span>${esc(k.question)}</span>
+          <span style="white-space:nowrap">
+            <span class="src${k.source === "learned" ? " learned" : ""}">${esc(k.source)}</span>
+            <button class="btn ghost sm" onclick="document.getElementById('ke-${k.id}').classList.toggle('show')">Edit</button>
+            <button class="btn red sm" onclick="archiveK('${k.id}', this)">Archive</button>
+          </span>
+        </div>
+        <div class="editor" id="ke-${k.id}">
+          <label class="flabel">Question (changing this re-teaches the bot what to match)</label>
+          <textarea id="kq-${k.id}" rows="2">${esc(k.question)}</textarea>
+          <label class="flabel">Answer</label>
+          <textarea id="ka-${k.id}">${esc(k.answer || "")}</textarea>
+          <button class="btn primary sm" onclick="saveK('${k.id}', this)">Save changes</button>
+        </div>`).join("")
+    : `<div class="empty" style="padding:18px">No approved answers yet.</div>`) + `</div>`;
+  const faq = data.faq || [];
+  html += `<h3 style="margin:22px 0 10px; font-size:15px">Website FAQ <span class="muted">(${faq.length})</span></h3>`;
+  html += `<div class="card"><div id="faqList">` + faq.map(f => faqRow(f)).join("") + `</div>
+    <div class="row" style="margin-top:12px">
+      <button class="btn ghost sm" onclick="addFaq()">+ Add FAQ entry</button>
+      <button class="btn primary sm" onclick="saveFaq(this)">Save FAQ changes</button>
+    </div>
+    <div class="muted" style="margin-top:10px">These are the FAQ entries your bot was set up with. Saving applies the list above to the bot right away. Approved answers stay separate and are not touched.</div>
+  </div>`;
+  html += `<div class="note"><strong>How this tab works:</strong> questions the bot couldn't answer appear here grouped with ask counts. When your business facts cover a question, a draft answer is written for you to check and edit — nothing publishes without your approval. Approving writes the answer into the knowledge base and it's live on the next chat message. You can also edit approved answers and the original FAQ entries here; those changes apply right away. Dismissed questions never return unless asked again.</div>`;
+  pk.innerHTML = html;
+}
+
+function faqRow(f){
+  return `<div class="faqrow">
+    <textarea class="faq-q" rows="2" placeholder="Question">${esc(f && f.q || "")}</textarea>
+    <textarea class="faq-a" rows="3" placeholder="Answer">${esc(f && f.a || "")}</textarea>
+    <button class="btn red sm" onclick="this.closest('.faqrow').remove()">Remove</button>
+  </div>`;
+}
+
+async function dismissQ(id, btn){
+  btn.disabled = true;
+  try {
+    await api("POST", { action: "dismiss", unanswered_id: id });
+    const card = $("q-" + id);
+    card.style.opacity = "0.45";
+    btn.outerHTML = '<span class="muted" style="font-size:12px">Dismissed</span>';
+    await refreshBadge();
+  } catch(e){ alert("Couldn't dismiss: " + e.message); btn.disabled = false; }
+}
+
+async function publishQ(id, btn){
+  const answer = $("t-" + id).value.trim();
+  if (!answer){ alert("Write the answer first."); return; }
+  btn.disabled = true; btn.textContent = "Publishing…";
+  try {
+    await api("POST", { action: "approve", unanswered_id: id, answer });
+    const card = $("q-" + id);
+    card.style.borderLeftColor = "var(--green)";
+    card.querySelector(".editor").classList.remove("show");
+    btn.outerHTML = '<span style="font-size:12px; font-weight:700; color:var(--green)">✓ Published — live on the next chat message</span>';
+    await refreshBadge();
+  } catch(e){ alert("Couldn't publish: " + e.message); btn.disabled = false; btn.textContent = "Publish answer"; }
+}
+
+async function redraftQ(id, btn){
+  btn.disabled = true; btn.textContent = "Drafting…";
+  try {
+    const r = await api("POST", { action: "redraft", unanswered_id: id });
+    $("t-" + id).value = r.draft_answer;
+    btn.textContent = "Re-draft from facts";
+  } catch(e){ alert("Couldn't draft: " + e.message); btn.textContent = "Re-draft from facts"; }
+  btn.disabled = false;
+}
+
+async function saveK(id, btn){
+  const question = $("kq-" + id).value.trim(), answer = $("ka-" + id).value.trim();
+  if (!question || !answer){ alert("Both the question and the answer are needed."); return; }
+  btn.disabled = true; btn.textContent = "Saving…";
+  try {
+    await api("POST", { action: "knowledge_update", knowledge_id: id, question, answer });
+    await load();
+  } catch(e){ alert("Couldn't save: " + e.message); btn.disabled = false; btn.textContent = "Save changes"; }
+}
+
+async function archiveK(id, btn){
+  if (!confirm("Archive this answer? The bot will stop using it. It can be restored later by Nona Digi.")) return;
+  btn.disabled = true;
+  try {
+    await api("POST", { action: "knowledge_archive", knowledge_id: id });
+    await load();
+  } catch(e){ alert("Couldn't archive: " + e.message); btn.disabled = false; }
+}
+
+function addFaq(){
+  $("faqList").insertAdjacentHTML("beforeend", faqRow(null));
+}
+
+async function saveFaq(btn){
+  const rows = [...document.querySelectorAll("#faqList .faqrow")];
+  const faq = [];
+  for (const r of rows){
+    const q = r.querySelector(".faq-q").value.trim(), a = r.querySelector(".faq-a").value.trim();
+    if (!q && !a) continue;
+    if (!q || !a){ alert("Every FAQ entry needs both a question and an answer. Complete the entry or remove it."); return; }
+    faq.push({ q, a });
+  }
+  btn.disabled = true; btn.textContent = "Saving…";
+  try {
+    await api("POST", { action: "faq_update", faq });
+    await load();
+  } catch(e){ alert("Couldn't save the FAQ: " + e.message); btn.disabled = false; btn.textContent = "Save FAQ changes"; }
+}
+
+async function refreshBadge(){
+  try {
+    const fresh = await api("GET");
+    data.unanswered = fresh.unanswered; data.knowledge = fresh.knowledge; data.faq = fresh.faq;
+    const badge = $("kBadge");
+    if (data.unanswered.length){ badge.style.display = ""; badge.textContent = data.unanswered.length; }
+    else badge.style.display = "none";
+  } catch(e){ /* non-fatal */ }
+}
+
+if (accessToken){ $("login").classList.remove("show"); $("signout").style.display = ""; load(); }
+else showLogin();
+</script>
+</body>
+</html>
