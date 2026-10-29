@@ -25,14 +25,23 @@
 <link rel="stylesheet" href="css/styles.css?v=dirB1">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Barlow+Condensed:wght@700&family=Roboto:wght@500&display=swap" rel="stylesheet">
+<!-- Fonts load non-blocking: hero text uses system fonts, so first paint must not wait on Google Fonts. Montserrat was requested but never used — dropped. -->
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700&family=Roboto:wght@500&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700&family=Roboto:wght@500&display=swap" rel="stylesheet"></noscript>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"ProfessionalService","name":"Nona Digi","url":"https://nonadigi.com","telephone":"+1-689-302-0209","description":"Nona Digi builds AI chat receptionists — chat-based AI for websites that answers, qualifies and books 24/7 — and AI visibility engines that get you cited by ChatGPT, Gemini, and Perplexity.","address":{"@type":"PostalAddress","addressLocality":"Orlando","addressRegion":"FL","addressCountry":"US"},"areaServed":"Orlando, Florida","makesOffer":[{"@type":"Offer","name":"AI Chat Receptionist","description":"Founding price after 40% discount, rate locked 12 months. $720 setup + $179/mo.","price":"179","priceCurrency":"USD"},{"@type":"Offer","name":"AI Visibility Engine","description":"Founding price after 40% discount, rate locked 12 months. $540/mo.","price":"540","priceCurrency":"USD"}]}
 </script>
 <!-- Calendly popup CSS loads non-blocking: only needed when a booking popup opens -->
 <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet" media="print" onload="this.media='all'">
 <noscript><link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet"></noscript>
-<script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
+<!-- Calendly loads on idle, not on page load: booking buttons fall back to a plain link until it arrives -->
+<script>
+(function(){
+  function loadCalendly(){ if (window.__calLoaded) return; window.__calLoaded = true; var s = document.createElement('script'); s.src = 'https://assets.calendly.com/assets/external/widget.js'; s.async = true; document.head.appendChild(s); }
+  if ('requestIdleCallback' in window) requestIdleCallback(loadCalendly, { timeout: 3000 });
+  else window.addEventListener('load', function(){ setTimeout(loadCalendly, 1000); });
+})();
+</script>
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>

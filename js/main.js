@@ -341,7 +341,8 @@ document.querySelectorAll('a[href^="#"]').forEach(function(a){
     }
     scroll();
   }
-  function botSay(text, chips, delay){
+  function botSay(text, chips, delay, instant){
+    if (instant){ addMsg(text, 'bot', chips); return; }
     var t = document.createElement('div');
     t.className = 'nona-typing';
     t.innerHTML = '<span></span><span></span><span></span>';
@@ -541,7 +542,7 @@ document.querySelectorAll('a[href^="#"]').forEach(function(a){
   function autoGreet(){
     if (greeted) return;
     greeted = true;
-    botSay('Hi! Looking for a dentist in Lake Nona? I can answer questions, check availability, and book you in — what do you need?', ['Book an appointment', 'See prices', 'Opening hours'], 600);
+    botSay('Hi! Looking for a dentist in Lake Nona? I can answer questions, check availability, and book you in — what do you need?', ['Book an appointment', 'See prices', 'Opening hours'], 0, true);
   }
   var demoEl = document.getElementById('heroChat');
   if ('IntersectionObserver' in window && demoEl){
