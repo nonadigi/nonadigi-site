@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Review Reply Helper — Free Google Review Response Generator | Nona Digi</title>
+<meta name="description" content="Paste a customer review and get three polite, professional reply options in seconds, free. For glowing reviews and tough ones alike — no arguing, no boilerplate.">
+<link rel="canonical" href="https://nonadigi.com/tools/review-reply-helper/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Nona Digi">
+<meta property="og:title" content="Review Reply Helper — Free Review Response Generator">
+<meta property="og:description" content="Three thoughtful reply options for any customer review, in seconds. Free.">
+<meta property="og:url" content="https://nonadigi.com/tools/review-reply-helper/">
+<meta name="theme-color" content="#ff5818">
+<link rel="stylesheet" href="../../css/styles.css">
+<link rel="stylesheet" href="../tools.css">
+<style>
+  .field label{display:block;font-size:12.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+  .field input,.field textarea,.field select{width:100%;border:1.5px solid var(--line);border-radius:12px;padding:12px 15px;font-size:15px;background:#fff;color:var(--ink);font-family:inherit}
+  .field textarea{min-height:120px;resize:vertical}
+  .field{margin-top:18px}
+  .counter{font-size:12.5px;color:var(--muted);font-weight:600;margin-top:6px;text-align:right}
+  .reply-list{display:flex;flex-direction:column;gap:12px}
+  .reply-item{background:var(--cream2);border:1px solid var(--line);border-radius:14px;padding:16px 18px}
+  .reply-item .rh{display:flex;align-items:center;gap:10px;margin-bottom:7px}
+  .reply-item .rh b{font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--primary-deep)}
+  .reply-item p{font-size:15px;line-height:1.65;color:var(--ink)}
+  .mini-btn{border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:6px 13px;font-size:12.5px;font-weight:700;color:var(--ink);cursor:pointer;font-family:inherit;margin-left:auto}
+  .mini-btn:hover{border-color:var(--primary);color:var(--primary-deep)}
+  .spinner{display:none;align-items:center;gap:10px;font-weight:700;color:var(--muted);margin-top:18px;font-size:14.5px}
+  .spinner.show{display:flex}
+  .spinner .dot{width:12px;height:12px;border-radius:50%;background:var(--primary);animation:pl 1s infinite}
+  @keyframes pl{0%,100%{opacity:1}50%{opacity:.3}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="wrap nav-in">
+    <a class="logo" href="/">nona<span>digi</span></a>
+    <div class="nav-links">
+      <a href="/">Home</a><div class="has-drop"><a href="/products/">Products ▾</a><div class="nav-drop"><a href="/ai-chat-receptionist/"><strong>AI Chat Receptionist</strong><small>24/7 AI front desk for your website, WhatsApp &amp; SMS</small></a><a href="/ai-visibility-report/"><strong>AI Visibility Engine</strong><small>Become the business ChatGPT, Gemini &amp; Perplexity recommend</small></a><span class="soon"><strong>AI Lead Manager <span class="pill">Coming soon</span></strong><small>Turns the lead catcher into a closer — works with your CRM</small></span></div></div><a href="/services/">Services</a><a href="/tools/"><strong style="color:var(--ink)">Free Tools</strong></a><a href="/#portfolio">Work</a><a href="/blog/">Blog</a><a href="/#faq">FAQ</a>
+    </div>
+    <a class="btn btn-primary btn-sm" href="/#audit">Free AI visibility audit</a>
+  </div>
+</nav>
+<main id="main">
+
+<header class="tool-hero">
+  <div class="wrap">
+    <div class="crumb"><a href="/">Home</a> &nbsp;›&nbsp; <a href="/tools/">Free Tools</a> &nbsp;›&nbsp; Review Reply Helper</div>
+    <span class="eyebrow">Free tool · Powered by AI</span>
+    <h1>Reply to any review <em>like a pro.</em></h1>
+    <p class="lede">A thoughtful reply makes a good review work harder and a bad review hurt less — future customers read the replies as closely as the reviews. Paste the review, get three options, pick your favorite.</p>
+  </div>
+</header>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="tool-panel">
+      <div class="field" style="margin-top:0"><label for="review">The review</label><textarea id="review" maxlength="900" placeholder="Paste the customer's review here, word for word…"></textarea><div class="counter"><span id="count">0</span> / 900 characters</div></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+        <div class="field"><label for="biz">Your business name (optional)</label><input type="text" id="biz" maxlength="80" placeholder="For example: Lake Nona Dental"></div>
+        <div class="field"><label for="tone">Tone</label><select id="tone"><option value="professional">Professional</option><option value="friendly">Friendly and warm</option><option value="brief">Brief and to the point</option></select></div>
+      </div>
+      <div class="actions"><button class="btn btn-primary" id="goBtn" type="button">Write my replies</button></div>
+      <div class="spinner" id="spinner"><span class="dot"></span><span>Reading the review and writing replies…</span></div>
+      <div class="err" id="err"></div>
+      <div class="out" id="out">
+        <h3 style="font-size:19px;font-weight:800;margin-bottom:14px">Pick the reply that sounds most like you</h3>
+        <div class="reply-list" id="replyList"></div>
+        <p class="note">Read before you post, and personalize one detail if you can — a name, a dish, a service. For a negative review, the calmest reply usually wins: it is written for the hundred people who will read it later, not just the one who wrote the review.</p>
+      </div>
+    </div>
+
+    <div class="band sell">
+      <h2>Reviews are only half of being found</h2>
+      <p>Replying well helps, but customers also have to find you first — in Google results and in the answers AI assistants give. The free AI Visibility Audit shows how visible your business is today, and where the gaps are.</p>
+      <div class="row"><a class="btn btn-ghost btn-sm" href="/#audit">Get a free AI Visibility Audit</a><a class="btn btn-ghost btn-sm" href="/ai-visibility-report/">About the AI Visibility Engine</a></div>
+    </div>
+
+    <div class="more-tools">
+      <div class="sec-head" style="display:flex;align-items:baseline;gap:14px;margin:34px 0 20px"><h2 style="font-size:24px;font-weight:800;letter-spacing:-.02em">More free tools</h2><a href="/tools/" style="color:var(--primary-deep);font-weight:700;text-decoration:none;font-size:15px">See all tools →</a></div>
+      <div class="tool-grid">
+        <a class="tool-card" href="/tools/faq-generator/"><div class="ic">💬</div><h3>Frequently Asked Questions Generator</h3><p>Paste your website address and get starter questions and answers your customers actually ask.</p><div class="tags"><span class="tag free">Free</span><span class="tag ai">Powered by AI</span></div></a>
+        <a class="tool-card" href="/tools/review-qr-generator/"><div class="ic">⭐</div><h3>Review QR Code Generator</h3><p>Turn your Google review link into a printable QR code for your counter, receipts, and tables.</p><div class="tags"><span class="tag free">Free</span><span class="tag">Runs in your browser</span></div></a>
+        <a class="tool-card" href="/tools/missed-lead-calculator/"><div class="ic">📞</div><h3>After-Hours Missed-Lead Calculator</h3><p>See what missed calls and slow replies may be costing your business every month.</p><div class="tags"><span class="tag free">Free</span><span class="tag">Runs in your browser</span></div></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a class="logo" style="font-size:19px;color:#fff" href="/">nona<span>digi</span></a>
+        <p>AI Visibility, AEO &amp; Digital Growth.<br>Proudly built in the USA.</p>
+        <a class="tel" href="tel:+16893020209">(689) 302-0209</a>
+      </div>
+      <nav aria-label="Products">
+        <h4>Products</h4>
+        <a href="/ai-chat-receptionist/">AI Chat Receptionist</a>
+        <a href="/ai-visibility-report/">AI Visibility Engine</a>
+        <a href="/products/">AI Lead Manager <span class="pill">Coming soon</span></a>
+        <a href="/products/">All products</a>
+      </nav>
+      <nav aria-label="Company">
+        <h4>Company</h4>
+        <a href="/services/">Services</a>
+        <a href="/tools/">Free tools</a>
+        <a href="/#portfolio">Our work</a>
+        <a href="/blog/">Blog</a>
+        <a href="/#faq">FAQ</a>
+      </nav>
+      <nav aria-label="Get started">
+        <h4>Get started</h4>
+        <a href="/#audit">Free AI visibility audit</a>
+        <a href="/unsubscribe/">Email preferences</a>
+      </nav>
+    </div>
+    <div class="foot-base">
+      <span>&copy; 2026 Nona Digi</span>
+      <span>AI Visibility, AEO &amp; Digital Growth &middot; USA</span>
+    </div>
+  </div>
+</footer>
+<script>
+(function () {
+  var API = "https://ohwnsrwjdzigzceisker.supabase.co/functions/v1/tools-ai";
+  var ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9od25zcndqZHppZ3pjZWlza2VyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTEyMzQzNDksImV4cCI6MjEwNjgxMDM0OX0.Lp_hcHPBRBCeJxCIIgpKpeUGTLSdhG3FrbDTkYSu2NA";
+  var reviewEl = document.getElementById("review"), bizEl = document.getElementById("biz"),
+      toneEl = document.getElementById("tone"), countEl = document.getElementById("count"),
+      goBtn = document.getElementById("goBtn"), spinner = document.getElementById("spinner"),
+      err = document.getElementById("err"), out = document.getElementById("out"),
+      replyList = document.getElementById("replyList");
+
+  reviewEl.addEventListener("input", function () { countEl.textContent = reviewEl.value.length; });
+  function fail(msg) { err.textContent = msg; err.classList.add("show"); }
+  function copyText(t, btn) {
+    function done() { var old = btn.textContent; btn.textContent = "Copied ✓"; setTimeout(function () { btn.textContent = old; }, 1600); }
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(t).then(done).catch(done);
+    else done();
+  }
+  goBtn.addEventListener("click", function () {
+    err.classList.remove("show"); out.classList.remove("show");
+    var review = reviewEl.value.trim();
+    if (review.length < 10) { fail("Paste the full review first — a little more text gives a much better reply."); return; }
+    goBtn.disabled = true; spinner.classList.add("show");
+    fetch(API, { method: "POST", headers: { "Content-Type": "application/json", "Authorization": "Bearer " + ANON }, body: JSON.stringify({ action: "review_reply", review: review, business: bizEl.value.trim(), tone: toneEl.value }) })
+      .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
+      .then(function (res) {
+        if (!res.ok) throw new Error(res.j && res.j.error ? res.j.error : "Something went wrong. Please try again.");
+        replyList.innerHTML = "";
+        (res.j.replies || []).forEach(function (text, i) {
+          var item = document.createElement("div"); item.className = "reply-item";
+          var rh = document.createElement("div"); rh.className = "rh";
+          var b = document.createElement("b"); b.textContent = "Option " + (i + 1);
+          var btn = document.createElement("button"); btn.type = "button"; btn.className = "mini-btn"; btn.textContent = "Copy reply";
+          btn.addEventListener("click", function () { copyText(text, btn); });
+          rh.appendChild(b); rh.appendChild(btn);
+          var p = document.createElement("p"); p.textContent = text;
+          item.appendChild(rh); item.appendChild(p); replyList.appendChild(item);
+        });
+        out.classList.add("show");
+        out.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      })
+      .catch(function (e) { fail(e.message || "Something went wrong. Please try again."); })
+      .finally(function () { goBtn.disabled = false; spinner.classList.remove("show"); });
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FAQ Generator — Free Frequently Asked Questions Generator | Nona Digi</title>
+<meta name="description" content="Generate starter frequently asked questions and answers for your business website, free. Paste your website address and get questions your customers actually ask, with answers drafted from your own site.">
+<link rel="canonical" href="https://nonadigi.com/tools/faq-generator/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Nona Digi">
+<meta property="og:title" content="Frequently Asked Questions Generator — Free">
+<meta property="og:description" content="Starter questions and answers for your website, drafted from your own pages. Free.">
+<meta property="og:url" content="https://nonadigi.com/tools/faq-generator/">
+<meta name="theme-color" content="#ff5818">
+<link rel="stylesheet" href="../../css/styles.css">
+<link rel="stylesheet" href="../tools.css">
+<style>
+  .field label{display:block;font-size:12.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+  .field input,.field textarea{width:100%;border:1.5px solid var(--line);border-radius:12px;padding:12px 15px;font-size:15px;background:#fff;color:var(--ink);font-family:inherit}
+  .field textarea{min-height:130px;resize:vertical}
+  .field{margin-top:18px}
+  .qa-list{display:flex;flex-direction:column;gap:12px;margin-top:6px}
+  .qa-item{background:var(--cream2);border:1px solid var(--line);border-radius:14px;padding:16px 18px}
+  .qa-item h4{font-size:16px;font-weight:800;margin-bottom:5px;padding-right:86px;position:relative}
+  .qa-item p{font-size:14.5px;color:var(--muted);line-height:1.6}
+  .copy-btn{position:absolute;top:0;right:0}
+  .mini-btn{border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:6px 13px;font-size:12.5px;font-weight:700;color:var(--ink);cursor:pointer;font-family:inherit}
+  .mini-btn:hover{border-color:var(--primary);color:var(--primary-deep)}
+  .spinner{display:none;align-items:center;gap:10px;font-weight:700;color:var(--muted);margin-top:18px;font-size:14.5px}
+  .spinner.show{display:flex}
+  .spinner .dot{width:12px;height:12px;border-radius:50%;background:var(--primary);animation:pl 1s infinite}
+  @keyframes pl{0%,100%{opacity:1}50%{opacity:.3}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="wrap nav-in">
+    <a class="logo" href="/">nona<span>digi</span></a>
+    <div class="nav-links">
+      <a href="/">Home</a><div class="has-drop"><a href="/products/">Products ▾</a><div class="nav-drop"><a href="/ai-chat-receptionist/"><strong>AI Chat Receptionist</strong><small>24/7 AI front desk for your website, WhatsApp &amp; SMS</small></a><a href="/ai-visibility-report/"><strong>AI Visibility Engine</strong><small>Become the business ChatGPT, Gemini &amp; Perplexity recommend</small></a><span class="soon"><strong>AI Lead Manager <span class="pill">Coming soon</span></strong><small>Turns the lead catcher into a closer — works with your CRM</small></span></div></div><a href="/services/">Services</a><a href="/tools/"><strong style="color:var(--ink)">Free Tools</strong></a><a href="/#portfolio">Work</a><a href="/blog/">Blog</a><a href="/#faq">FAQ</a>
+    </div>
+    <a class="btn btn-primary btn-sm" href="/#audit">Free AI visibility audit</a>
+  </div>
+</nav>
+<main id="main">
+
+<header class="tool-hero">
+  <div class="wrap">
+    <div class="crumb"><a href="/">Home</a> &nbsp;›&nbsp; <a href="/tools/">Free Tools</a> &nbsp;›&nbsp; Frequently Asked Questions Generator</div>
+    <span class="eyebrow">Free tool · Powered by AI</span>
+    <h1>Starter questions your <em>customers actually ask.</em></h1>
+    <p class="lede">Every business website needs a questions page, and writing one from a blank screen is nobody's favorite job. Paste your website address and get a ready-to-edit set of questions and answers, drafted from your own pages — never invented.</p>
+  </div>
+</header>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="tool-panel">
+      <div class="ctl"><label>How should we learn about the business?</label>
+        <div class="radio-row">
+          <label class="chipopt"><input type="radio" name="mode" value="url" checked> Read my website</label>
+          <label class="chipopt"><input type="radio" name="mode" value="text"> I will paste the details</label>
+        </div></div>
+      <div class="field" id="urlField"><label for="url">Your website address</label><input type="text" id="url" placeholder="www.yourbusiness.com" inputmode="url"></div>
+      <div class="field" id="textField" style="display:none"><label for="text">Tell us about the business</label><textarea id="text" maxlength="6000" placeholder="What you do, where you are, your services, prices if you publish them, how booking works, anything customers ask you often…"></textarea></div>
+      <div class="actions"><button class="btn btn-primary" id="goBtn" type="button">Generate my questions</button></div>
+      <div class="spinner" id="spinner"><span class="dot"></span><span id="spinnerText">Reading and writing your questions…</span></div>
+      <div class="err" id="err"></div>
+      <div class="out" id="out">
+        <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px"><h3 style="font-size:19px;font-weight:800">Your starter questions</h3><button class="mini-btn" id="copyAll" type="button" style="margin-left:auto">Copy all</button></div>
+        <p class="note" id="thinNote" style="display:none;margin:0 0 14px"></p>
+        <div class="qa-list" id="qaList"></div>
+        <p class="note">These are drafts — read them before publishing and adjust anything that does not sound like you. Answers are written only from the information provided; if a detail was not on your website, it is not in an answer.</p>
+      </div>
+    </div>
+
+    <div class="band sell">
+      <h2>Now imagine these answered automatically, all day and night</h2>
+      <p>A questions page helps people who go looking for it. The AI Chat Receptionist answers these same questions the moment a visitor asks, right on your website — and turns the conversation into a booking or a lead.</p>
+      <div class="row"><a class="btn btn-ghost btn-sm" href="/ai-chat-receptionist/">Meet the AI Chat Receptionist</a><a class="btn btn-ghost btn-sm" href="/#audit">Get a free AI Visibility Audit</a></div>
+    </div>
+
+    <div class="more-tools">
+      <div class="sec-head" style="display:flex;align-items:baseline;gap:14px;margin:34px 0 20px"><h2 style="font-size:24px;font-weight:800;letter-spacing:-.02em">More free tools</h2><a href="/tools/" style="color:var(--primary-deep);font-weight:700;text-decoration:none;font-size:15px">See all tools →</a></div>
+      <div class="tool-grid">
+        <a class="tool-card" href="/tools/review-reply-helper/"><div class="ic">✍️</div><h3>Review Reply Helper</h3><p>Paste a customer review and get polite, professional reply options in seconds.</p><div class="tags"><span class="tag free">Free</span><span class="tag ai">Powered by AI</span></div></a>
+        <a class="tool-card" href="/tools/review-qr-generator/"><div class="ic">⭐</div><h3>Review QR Code Generator</h3><p>Turn your Google review link into a printable QR code for your counter, receipts, and tables.</p><div class="tags"><span class="tag free">Free</span><span class="tag">Runs in your browser</span></div></a>
+        <a class="tool-card" href="/tools/missed-lead-calculator/"><div class="ic">📞</div><h3>After-Hours Missed-Lead Calculator</h3><p>See what missed calls and slow replies may be costing your business every month.</p><div class="tags"><span class="tag free">Free</span><span class="tag">Runs in your browser</span></div></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a class="logo" style="font-size:19px;color:#fff" href="/">nona<span>digi</span></a>
+        <p>AI Visibility, AEO &amp; Digital Growth.<br>Proudly built in the USA.</p>
+        <a class="tel" href="tel:+16893020209">(689) 302-0209</a>
+      </div>
+      <nav aria-label="Products">
+        <h4>Products</h4>
+        <a href="/ai-chat-receptionist/">AI Chat Receptionist</a>
+        <a href="/ai-visibility-report/">AI Visibility Engine</a>
+        <a href="/products/">AI Lead Manager <span class="pill">Coming soon</span></a>
+        <a href="/products/">All products</a>
+      </nav>
+      <nav aria-label="Company">
+        <h4>Company</h4>
+        <a href="/services/">Services</a>
+        <a href="/tools/">Free tools</a>
+        <a href="/#portfolio">Our work</a>
+        <a href="/blog/">Blog</a>
+        <a href="/#faq">FAQ</a>
+      </nav>
+      <nav aria-label="Get started">
+        <h4>Get started</h4>
+        <a href="/#audit">Free AI visibility audit</a>
+        <a href="/unsubscribe/">Email preferences</a>
+      </nav>
+    </div>
+    <div class="foot-base">
+      <span>&copy; 2026 Nona Digi</span>
+      <span>AI Visibility, AEO &amp; Digital Growth &middot; USA</span>
+    </div>
+  </div>
+</footer>
+<script>
+(function () {
+  var API = "https://ohwnsrwjdzigzceisker.supabase.co/functions/v1/tools-ai";
+  var ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9od25zcndqZHppZ3pjZWlza2VyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTEyMzQzNDksImV4cCI6MjEwNjgxMDM0OX0.Lp_hcHPBRBCeJxCIIgpKpeUGTLSdhG3FrbDTkYSu2NA";
+  var urlField = document.getElementById("urlField"), textField = document.getElementById("textField"),
+      urlEl = document.getElementById("url"), textEl = document.getElementById("text"),
+      goBtn = document.getElementById("goBtn"), spinner = document.getElementById("spinner"),
+      spinnerText = document.getElementById("spinnerText"), err = document.getElementById("err"),
+      out = document.getElementById("out"), qaList = document.getElementById("qaList"),
+      thinNote = document.getElementById("thinNote"), copyAll = document.getElementById("copyAll");
+  var lastFaqs = [];
+
+  document.querySelectorAll("input[name='mode']").forEach(function (el) {
+    el.addEventListener("change", function () {
+      var mode = document.querySelector("input[name='mode']:checked").value;
+      urlField.style.display = mode === "url" ? "" : "none";
+      textField.style.display = mode === "text" ? "" : "none";
+    });
+  });
+  function fail(msg) { err.textContent = msg; err.classList.add("show"); }
+  function copyText(t, btn) {
+    function done() { var old = btn.textContent; btn.textContent = "Copied ✓"; setTimeout(function () { btn.textContent = old; }, 1600); }
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(t).then(done).catch(done);
+    else done();
+  }
+  goBtn.addEventListener("click", function () {
+    err.classList.remove("show"); out.classList.remove("show");
+    var mode = document.querySelector("input[name='mode']:checked").value;
+    var payload = { action: "faq_generate", mode: mode };
+    if (mode === "url") {
+      var u = urlEl.value.trim();
+      if (!u) { fail("Paste your website address first."); return; }
+      if (!/^https?:\/\//i.test(u)) u = "https://" + u;
+      payload.url = u;
+      spinnerText.textContent = "Reading your website and writing questions…";
+    } else {
+      var t = textEl.value.trim();
+      if (t.length < 60) { fail("Add a little more detail about the business — a few sentences at least — so the questions come out useful."); return; }
+      payload.text = t;
+      spinnerText.textContent = "Writing your questions…";
+    }
+    goBtn.disabled = true; spinner.classList.add("show");
+    fetch(API, { method: "POST", headers: { "Content-Type": "application/json", "Authorization": "Bearer " + ANON }, body: JSON.stringify(payload) })
+      .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
+      .then(function (res) {
+        if (!res.ok) throw new Error(res.j && res.j.error ? res.j.error : "Something went wrong. Please try again.");
+        lastFaqs = res.j.faqs || [];
+        qaList.innerHTML = "";
+        lastFaqs.forEach(function (f) {
+          var item = document.createElement("div"); item.className = "qa-item";
+          var h = document.createElement("h4"); h.textContent = f.q;
+          var btn = document.createElement("button"); btn.type = "button"; btn.className = "mini-btn copy-btn"; btn.textContent = "Copy";
+          btn.addEventListener("click", function () { copyText(f.q + "\n" + f.a, btn); });
+          h.appendChild(btn);
+          var p = document.createElement("p"); p.textContent = f.a;
+          item.appendChild(h); item.appendChild(p); qaList.appendChild(item);
+        });
+        if (res.j.note) { thinNote.textContent = res.j.note; thinNote.style.display = ""; } else thinNote.style.display = "none";
+        out.classList.add("show");
+        out.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      })
+      .catch(function (e) { fail(e.message || "Something went wrong. Please try again."); })
+      .finally(function () { goBtn.disabled = false; spinner.classList.remove("show"); });
+  });
+  copyAll.addEventListener("click", function () {
+    copyText(lastFaqs.map(function (f) { return f.q + "\n" + f.a; }).join("\n\n"), copyAll);
+  });
+})();
+</script>
+</body>
+</html>
