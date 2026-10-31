@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Compare Two Documents — Free Online Document Diff Tool | Nona Digi</title>
+<meta name="description" content="Compare two documents online for free and see every added, removed and changed line highlighted. Works with Word documents and plain text. No sign-up, and your documents never leave your device.">
+<link rel="canonical" href="https://nonadigi.com/tools/document-compare/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Nona Digi">
+<meta property="og:title" content="Compare Two Documents — Free Diff Tool">
+<meta property="og:description" content="Two versions of a document, every difference highlighted. Free, no sign-up, runs in your browser.">
+<meta property="og:url" content="https://nonadigi.com/tools/document-compare/">
+<meta name="theme-color" content="#ff5818">
+<link rel="stylesheet" href="../../css/styles.css">
+<link rel="stylesheet" href="../tools.css">
+<style>
+  .sides{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .sides textarea{width:100%;min-height:110px;border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;font-size:14px;font-family:inherit;margin-top:12px;resize:vertical}
+  .summary{display:none;margin-top:20px;background:var(--cream2);border:1px solid var(--line);border-radius:14px;padding:15px 18px;font-size:15px;font-weight:700;flex-wrap:wrap;gap:10px 26px}
+  .summary.show{display:flex}
+  .summary .a{color:#067a57}.summary .d{color:#9c1032}.summary .s{color:var(--muted)}
+  .diff{margin-top:16px;border:1px solid var(--line);border-radius:14px;overflow:hidden;font-size:14px;line-height:1.55;display:none}
+  .diff.show{display:block}
+  .diff .row{padding:8px 14px;white-space:pre-wrap;word-break:break-word;border-bottom:1px solid #f3eee8}
+  .diff .row:last-child{border-bottom:0}
+  .diff .same{background:#fff;color:var(--muted)}
+  .diff .add{background:#eefaf4;color:#067a57}
+  .diff .del{background:#fdeef1;color:#9c1032}
+  .diff.hide-same .same{display:none}
+  .only-changes{display:none;margin-top:14px;font-size:14px;font-weight:600;color:var(--muted);align-items:center;gap:8px}
+  .only-changes.show{display:flex}
+  @media (max-width:920px){.sides{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="wrap nav-in">
+    <a class="logo" href="/">nona<span>digi</span></a>
+    <div class="nav-links">
+      <a href="/">Home</a><div class="has-drop"><a href="/products/">Products ▾</a><div class="nav-drop"><a href="/ai-chat-receptionist/"><strong>AI Chat Receptionist</strong><small>24/7 AI front desk for your website, WhatsApp &amp; SMS</small></a><a href="/ai-visibility-report/"><strong>AI Visibility Engine</strong><small>Become the business ChatGPT, Gemini &amp; Perplexity recommend</small></a><span class="soon"><strong>AI Lead Manager <span class="pill">Coming soon</span></strong><small>Turns the lead catcher into a closer — works with your CRM</small></span></div></div><a href="/services/">Services</a><a href="/tools/"><strong style="color:var(--ink)">Free Tools</strong></a><a href="/#portfolio">Work</a><a href="/blog/">Blog</a><a href="/#faq">FAQ</a>
+    </div>
+    <a class="btn btn-primary btn-sm" href="/#audit">Free AI visibility audit</a>
+  </div>
+</nav>
+<main id="main">
+
+<header class="tool-hero">
+  <div class="wrap">
+    <div class="crumb"><a href="/">Home</a> &nbsp;›&nbsp; <a href="/tools/">Free Tools</a> &nbsp;›&nbsp; Compare Two Documents</div>
+    <span class="eyebrow">Free tool</span>
+    <h1>Compare two documents, <em>see every difference.</em></h1>
+    <p class="lede">A revised quote, an updated contract, a new version of a proposal — drop in both versions and every added, removed, and changed line is highlighted for you. Your documents never leave your device.</p>
+  </div>
+</header>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="tool-panel">
+      <div class="sides">
+        <div>
+          <div class="drop" id="dropA">Original document — drop or <b>browse</b><span class="small">Word (.docx) or plain text (.txt, .md)</span></div>
+          <input type="file" id="fileA" accept=".docx,.txt,.md,.text" hidden>
+          <textarea id="textA" placeholder="…or paste the original text here"></textarea>
+        </div>
+        <div>
+          <div class="drop" id="dropB">Newer document — drop or <b>browse</b><span class="small">Word (.docx) or plain text (.txt, .md)</span></div>
+          <input type="file" id="fileB" accept=".docx,.txt,.md,.text" hidden>
+          <textarea id="textB" placeholder="…or paste the newer text here"></textarea>
+        </div>
+      </div>
+      <div class="actions"><button class="btn btn-primary" id="compareBtn" type="button">Compare the two documents</button></div>
+      <div class="err" id="err"></div>
+      <div class="summary" id="summary"></div>
+      <label class="only-changes" id="onlyWrap"><input type="checkbox" id="onlyChanges"> Show only the changes</label>
+      <div class="diff" id="diff"></div>
+      <p class="note">A note on formats: this tool reads Word documents and plain text files, entirely inside your browser. PDF files cannot be read reliably without uploading them to a server, and we would rather keep your documents private — for a PDF, copy its text and paste it into the boxes instead.</p>
+    </div>
+
+    <div class="steps">
+      <div class="step"><div class="n">1</div><h4>Add both versions</h4><p>Upload the original and the newer document, or paste the text of each.</p></div>
+      <div class="step"><div class="n">2</div><h4>Compare in one click</h4><p>The two are lined up paragraph by paragraph, entirely on your device.</p></div>
+      <div class="step"><div class="n">3</div><h4>Read only what changed</h4><p>Additions in green, removals in red — and a toggle to hide everything that stayed the same.</p></div>
+    </div>
+
+    <div class="more-tools">
+      <div class="sec-head" style="display:flex;align-items:baseline;gap:14px;margin:34px 0 20px"><h2 style="font-size:24px;font-weight:800;letter-spacing:-.02em">More free tools</h2><a href="/tools/" style="color:var(--primary-deep);font-weight:700;text-decoration:none;font-size:15px">See all tools →</a></div>
+      <div class="tool-grid">
+        <a class="tool-card" href="/tools/review-qr-generator/"><div class="ic">⭐</div><h3>Review QR Code Generator</h3><p>Turn your Google review link into a printable QR code for your counter, receipts, and tables.</p><div class="tags"><span class="tag free">Free</span><span class="tag">Runs in your browser</span></div></a>
+        <a class="tool-card" href="/tools/image-compressor/"><div class="ic">🗜️</div><h3>Image Compressor</h3><p>Shrink photo file sizes for websites, email, and uploads while keeping them looking sharp.</p><div class="tags"><span class="tag free">Free</span><span class="tag">Runs in your browser</span></div></a>
+        <a class="tool-card" href="/tools/photo-metadata-remover/"><div class="ic">🕵️</div><h3>Photo Metadata Remover</h3><p>Strip hidden location and device details from photos before you share them publicly.</p><div class="tags"><span class="tag free">Free</span><span class="tag">Runs in your browser</span></div></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a class="logo" style="font-size:19px;color:#fff" href="/">nona<span>digi</span></a>
+        <p>AI Visibility, AEO &amp; Digital Growth.<br>Proudly built in the USA.</p>
+        <a class="tel" href="tel:+16893020209">(689) 302-0209</a>
+      </div>
+      <nav aria-label="Products">
+        <h4>Products</h4>
+        <a href="/ai-chat-receptionist/">AI Chat Receptionist</a>
+        <a href="/ai-visibility-report/">AI Visibility Engine</a>
+        <a href="/products/">AI Lead Manager <span class="pill">Coming soon</span></a>
+        <a href="/products/">All products</a>
+      </nav>
+      <nav aria-label="Company">
+        <h4>Company</h4>
+        <a href="/services/">Services</a>
+        <a href="/tools/">Free tools</a>
+        <a href="/#portfolio">Our work</a>
+        <a href="/blog/">Blog</a>
+        <a href="/#faq">FAQ</a>
+      </nav>
+      <nav aria-label="Get started">
+        <h4>Get started</h4>
+        <a href="/#audit">Free AI visibility audit</a>
+        <a href="/unsubscribe/">Email preferences</a>
+      </nav>
+    </div>
+    <div class="foot-base">
+      <span>&copy; 2026 Nona Digi</span>
+      <span>AI Visibility, AEO &amp; Digital Growth &middot; USA</span>
+    </div>
+  </div>
+</footer>
+<script src="../tools.js"></script>
+<script>
+(function () {
+  var T = window.NonaTools;
+  var err = document.getElementById("err"), summary = document.getElementById("summary"),
+      diffEl = document.getElementById("diff"), onlyWrap = document.getElementById("onlyWrap"),
+      onlyChanges = document.getElementById("onlyChanges");
+  var texts = { A: "", B: "" };
+
+  function entities(s) {
+    return s.replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"').replace(/&apos;/g, "'").replace(/&amp;/g, "&");
+  }
+  async function inflate(data) {
+    var stream = new Blob([data]).stream().pipeThrough(new DecompressionStream("deflate-raw"));
+    return new Uint8Array(await new Response(stream).arrayBuffer());
+  }
+  async function docxText(file) {
+    var buf = new Uint8Array(await file.arrayBuffer());
+    var view = new DataView(buf.buffer, buf.byteOffset, buf.byteLength);
+    var eocd = -1;
+    for (var i = buf.length - 22; i >= 0 && i > buf.length - 22 - 66000; i--) {
+      if (view.getUint32(i, true) === 0x06054b50) { eocd = i; break; }
+    }
+    if (eocd < 0) throw new Error("That file does not look like a valid Word document.");
+    var count = view.getUint16(eocd + 10, true);
+    var off = view.getUint32(eocd + 16, true);
+    var target = null;
+    for (var n = 0; n < count; n++) {
+      if (view.getUint32(off, true) !== 0x02014b50) break;
+      var method = view.getUint16(off + 10, true);
+      var csize = view.getUint32(off + 20, true);
+      var nlen = view.getUint16(off + 28, true);
+      var elen = view.getUint16(off + 30, true);
+      var clen = view.getUint16(off + 32, true);
+      var lho = view.getUint32(off + 42, true);
+      var name = new TextDecoder().decode(buf.slice(off + 46, off + 46 + nlen));
+      if (name === "word/document.xml") { target = { method: method, csize: csize, lho: lho }; break; }
+      off += 46 + nlen + elen + clen;
+    }
+    if (!target) throw new Error("No readable text was found in that Word document.");
+    var lo = target.lho;
+    var lnlen = view.getUint16(lo + 26, true), lelen = view.getUint16(lo + 28, true);
+    var start = lo + 30 + lnlen + lelen;
+    var raw = buf.slice(start, start + target.csize);
+    var xmlBytes = target.method === 8 ? await inflate(raw) : raw;
+    var xml = new TextDecoder().decode(xmlBytes);
+    xml = xml.replace(/<w:tab[^>]*\/>/g, "\t").replace(/<w:br[^>]*\/>/g, "\n").replace(/<\/w:p>/g, "\n");
+    xml = xml.replace(/<[^>]+>/g, "");
+    return entities(xml);
+  }
+  async function readFile(file) {
+    if (/\.docx$/i.test(file.name)) return docxText(file);
+    if (/\.(txt|md|text)$/i.test(file.name) || file.type.indexOf("text/") === 0) return file.text();
+    throw new Error("“" + file.name + "” is not a format this tool can read. Use a Word document (.docx) or a plain text file, or paste the text instead.");
+  }
+  function wire(dropId, inputId, textId, key) {
+    var drop = document.getElementById(dropId), input = document.getElementById(inputId), ta = document.getElementById(textId);
+    T.setupDrop(drop, input, function (files) {
+      var f = files[0]; if (!f) return;
+      readFile(f).then(function (text) {
+        texts[key] = text; ta.value = "";
+        drop.innerHTML = "Loaded: <b>" + f.name + "</b><span class='small'>" + text.split(/\r?\n/).length + " lines read · click or drop to change</span>";
+        T.hideErr(err);
+      }).catch(function (e) { T.showErr(err, e.message); });
+    });
+    ta.addEventListener("input", function () { if (ta.value.trim()) texts[key] = ta.value; });
+  }
+  wire("dropA", "fileA", "textA", "A");
+  wire("dropB", "fileB", "textB", "B");
+
+  function linesOf(text) {
+    var ls = text.replace(/\r\n?/g, "\n").split("\n").map(function (s) { return s.replace(/\s+$/g, ""); });
+    while (ls.length && !ls[0].trim()) ls.shift();
+    while (ls.length && !ls[ls.length - 1].trim()) ls.pop();
+    return ls;
+  }
+  function diffLines(a, b) {
+    var n = a.length, m = b.length;
+    var dp = new Uint32Array((n + 1) * (m + 1));
+    for (var i = n - 1; i >= 0; i--) {
+      for (var j = m - 1; j >= 0; j--) {
+        dp[i * (m + 1) + j] = a[i] === b[j]
+          ? dp[(i + 1) * (m + 1) + (j + 1)] + 1
+          : Math.max(dp[(i + 1) * (m + 1) + j], dp[i * (m + 1) + (j + 1)]);
+      }
+    }
+    var rows = [], x = 0, y = 0;
+    while (x < n && y < m) {
+      if (a[x] === b[y]) { rows.push({ t: "same", s: a[x] }); x++; y++; }
+      else if (dp[(x + 1) * (m + 1) + y] >= dp[x * (m + 1) + (y + 1)]) { rows.push({ t: "del", s: a[x] }); x++; }
+      else { rows.push({ t: "add", s: b[y] }); y++; }
+    }
+    while (x < n) rows.push({ t: "del", s: a[x++] });
+    while (y < m) rows.push({ t: "add", s: b[y++] });
+    return rows;
+  }
+  document.getElementById("compareBtn").addEventListener("click", function () {
+    T.hideErr(err);
+    var a = linesOf(texts.A || ""), b = linesOf(texts.B || "");
+    if (!a.length || !b.length) { T.showErr(err, "Add both documents first — upload a file or paste text on each side."); return; }
+    if (a.length > 2500 || b.length > 2500) { T.showErr(err, "Those documents are very large for a line-by-line comparison in the browser. Try comparing one section at a time."); return; }
+    var rows = diffLines(a, b);
+    var na = 0, nd = 0, ns = 0;
+    var frag = document.createDocumentFragment();
+    rows.forEach(function (r) {
+      if (r.t === "add") na++; else if (r.t === "del") nd++; else ns++;
+      var d = document.createElement("div");
+      d.className = "row " + r.t;
+      d.textContent = (r.t === "add" ? "+ " : r.t === "del" ? "− " : "  ") + (r.s || " ");
+      frag.appendChild(d);
+    });
+    diffEl.innerHTML = ""; diffEl.appendChild(frag);
+    summary.innerHTML = "<span class='a'>+ " + na + " lines added</span><span class='d'>− " + nd + " lines removed</span><span class='s'>" + ns + " lines unchanged</span>";
+    summary.classList.add("show");
+    onlyWrap.classList.add("show");
+    diffEl.classList.add("show");
+    diffEl.classList.toggle("hide-same", onlyChanges.checked);
+    summary.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  });
+  onlyChanges.addEventListener("change", function () { diffEl.classList.toggle("hide-same", onlyChanges.checked); });
+})();
+</script>
+</body>
+</html>

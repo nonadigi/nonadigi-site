@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Review QR Code Generator — Free Google Review QR Codes | Nona Digi</title>
+<meta name="description" content="Create a free QR code for your Google review link. Print it for your counter, receipts and tables so happy customers can review you on the spot. No sign-up, runs in your browser.">
+<link rel="canonical" href="https://nonadigi.com/tools/review-qr-generator/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Nona Digi">
+<meta property="og:title" content="Review QR Code Generator — Free">
+<meta property="og:description" content="Turn your Google review link into a printable QR code in seconds. Free, no sign-up.">
+<meta property="og:url" content="https://nonadigi.com/tools/review-qr-generator/">
+<meta name="theme-color" content="#ff5818">
+<link rel="stylesheet" href="../../css/styles.css">
+<link rel="stylesheet" href="../tools.css">
+<style>
+  .qr-flex{display:flex;gap:26px;flex-wrap:wrap;align-items:flex-start}
+  .qr-box{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px;width:256px;text-align:center}
+  .qr-box #qrHere{display:flex;justify-content:center}
+  .qr-box #qrHere img,.qr-box #qrHere canvas{width:220px;height:220px}
+  .tent{flex:1;min-width:280px;background:var(--cream2);border:1px solid var(--line);border-radius:16px;padding:26px;text-align:center}
+  .tent .stars{color:#f5a623;font-size:20px;letter-spacing:4px}
+  .tent h3{font-size:21px;font-weight:800;margin:8px 0 4px}
+  .tent p{font-size:14px;color:var(--muted);line-height:1.55}
+  .tent #qrCard{display:flex;justify-content:center;margin-top:14px}
+  .tent #qrCard img,.tent #qrCard canvas{width:150px;height:150px}
+  .field label{display:block;font-size:12.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+  .field input,.field select{width:100%;border:1.5px solid var(--line);border-radius:12px;padding:12px 15px;font-size:15px;background:#fff;color:var(--ink);font-family:inherit}
+  .field{margin-top:16px}
+  .field:first-child{margin-top:0}
+  @media print{
+    body *{visibility:hidden}
+    #tentCard,#tentCard *{visibility:visible}
+    #tentCard{position:absolute;left:50%;top:40px;transform:translateX(-50%);width:340px;border:1.5px solid #ccc}
+  }
+</style>
+</head>
+<body>
+<nav>
+  <div class="wrap nav-in">
+    <a class="logo" href="/">nona<span>digi</span></a>
+    <div class="nav-links">
+      <a href="/">Home</a><div class="has-drop"><a href="/products/">Products ▾</a><div class="nav-drop"><a href="/ai-chat-receptionist/"><strong>AI Chat Receptionist</strong><small>24/7 AI front desk for your website, WhatsApp &amp; SMS</small></a><a href="/ai-visibility-report/"><strong>AI Visibility Engine</strong><small>Become the business ChatGPT, Gemini &amp; Perplexity recommend</small></a><span class="soon"><strong>AI Lead Manager <span class="pill">Coming soon</span></strong><small>Turns the lead catcher into a closer — works with your CRM</small></span></div></div><a href="/services/">Services</a><a href="/tools/"><strong style="color:var(--ink)">Free Tools</strong></a><a href="/#portfolio">Work</a><a href="/blog/">Blog</a><a href="/#faq">FAQ</a>
+    </div>
+    <a class="btn btn-primary btn-sm" href="/#audit">Free AI visibility audit</a>
+  </div>
+</nav>
+<main id="main">
+
+<header class="tool-hero">
+  <div class="wrap">
+    <div class="crumb"><a href="/">Home</a> &nbsp;›&nbsp; <a href="/tools/">Free Tools</a> &nbsp;›&nbsp; Review QR Code Generator</div>
+    <span class="eyebrow">Free tool</span>
+    <h1>Turn your review link into a <em>QR code.</em></h1>
+    <p class="lede">Happy customers mean to leave a review, then life happens. Put this code at your counter, on receipts, or on tables, and they can review you on the spot — while the good experience is still fresh.</p>
+  </div>
+</header>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="tool-panel">
+      <div class="field"><label for="biz">Your business name (shown on the printable card)</label><input type="text" id="biz" placeholder="For example: Lake Nona Dental"></div>
+      <div class="field"><label for="kind">What should the code open?</label>
+        <select id="kind"><option value="review">My Google review page</option><option value="booking">My booking page</option><option value="site">My website</option><option value="other">Any other link</option></select></div>
+      <div class="field"><label for="link">Paste your link</label><input type="text" id="link" placeholder="https://…" inputmode="url"></div>
+      <p class="note">Where do you find your Google review link? Open your Google Business Profile, look for “Ask for reviews,” and copy the link it gives you. It is short and made for sharing.</p>
+      <div class="actions"><button class="btn btn-primary" id="makeBtn" type="button">Create my QR code</button></div>
+      <div class="err" id="err"></div>
+      <div class="out" id="out">
+        <div class="qr-flex">
+          <div class="qr-box"><div id="qrHere"></div><div class="actions" style="justify-content:center"><button class="btn btn-ghost btn-sm" id="dlBtn" type="button">Download QR code</button></div></div>
+          <div class="tent" id="tentCard">
+            <div class="stars">★★★★★</div>
+            <h3 id="tentTitle">Enjoyed your visit?</h3>
+            <p id="tentText">Scan to leave us a Google review.<br>It takes less than a minute.</p>
+            <div id="qrCard"></div>
+            <p style="margin-top:12px;font-weight:700;color:var(--ink)" id="tentBiz"></p>
+          </div>
+        </div>
+        <div class="actions"><button class="btn btn-primary" id="printBtn" type="button">Print the table card</button></div>
+        <p class="note">Print the card for your counter or tables, tape the plain code near the register, or add it to receipts and invoices. The code is generated right here in your browser — your link is not sent anywhere.</p>
+      </div>
+    </div>
+
+    <div class="steps">
+      <div class="step"><div class="n">1</div><h4>Paste your link</h4><p>Your Google review link from your Business Profile, or any link you want customers to reach quickly.</p></div>
+      <div class="step"><div class="n">2</div><h4>Get your code and card</h4><p>Download the QR code image, or print the ready-made table card with your business name on it.</p></div>
+      <div class="step"><div class="n">3</div><h4>Put it where smiles happen</h4><p>Counter, tables, receipts, delivery bags — anywhere a happy customer can scan it in the moment.</p></div>
+    </div>
+
+    <div class="more-tools">
+      <div class="sec-head" style="display:flex;align-items:baseline;gap:14px;margin:34px 0 20px"><h2 style="font-size:24px;font-weight:800;letter-spacing:-.02em">More free tools</h2><a href="/tools/" style="color:var(--primary-deep);font-weight:700;text-decoration:none;font-size:15px">See all tools →</a></div>
+      <div class="tool-grid">
+        <a class="tool-card" href="/tools/image-resizer/"><div class="ic">📐</div><h3>Image Resizer</h3><p>Resize a photo to the exact size you need, including the right size for your Google Business Profile.</p><div class="tags"><span class="tag free">Free</span><span class="tag">Runs in your browser</span></div></a>
+        <a class="tool-card" href="/tools/missed-lead-calculator/"><div class="ic">📞</div><h3>After-Hours Missed-Lead Calculator</h3><p>See what missed calls and slow replies may be costing your business every month.</p><div class="tags"><span class="tag free">Free</span><span class="tag">Runs in your browser</span></div></a>
+        <a class="tool-card" href="/tools/image-compressor/"><div class="ic">🗜️</div><h3>Image Compressor</h3><p>Shrink photo file sizes for websites, email, and uploads while keeping them looking sharp.</p><div class="tags"><span class="tag free">Free</span><span class="tag">Runs in your browser</span></div></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a class="logo" style="font-size:19px;color:#fff" href="/">nona<span>digi</span></a>
+        <p>AI Visibility, AEO &amp; Digital Growth.<br>Proudly built in the USA.</p>
+        <a class="tel" href="tel:+16893020209">(689) 302-0209</a>
+      </div>
+      <nav aria-label="Products">
+        <h4>Products</h4>
+        <a href="/ai-chat-receptionist/">AI Chat Receptionist</a>
+        <a href="/ai-visibility-report/">AI Visibility Engine</a>
+        <a href="/products/">AI Lead Manager <span class="pill">Coming soon</span></a>
+        <a href="/products/">All products</a>
+      </nav>
+      <nav aria-label="Company">
+        <h4>Company</h4>
+        <a href="/services/">Services</a>
+        <a href="/tools/">Free tools</a>
+        <a href="/#portfolio">Our work</a>
+        <a href="/blog/">Blog</a>
+        <a href="/#faq">FAQ</a>
+      </nav>
+      <nav aria-label="Get started">
+        <h4>Get started</h4>
+        <a href="/#audit">Free AI visibility audit</a>
+        <a href="/unsubscribe/">Email preferences</a>
+      </nav>
+    </div>
+    <div class="foot-base">
+      <span>&copy; 2026 Nona Digi</span>
+      <span>AI Visibility, AEO &amp; Digital Growth &middot; USA</span>
+    </div>
+  </div>
+</footer>
+<script src="../qrcode.min.js"></script>
+<script>
+(function () {
+  var linkEl = document.getElementById("link"), bizEl = document.getElementById("biz"),
+      kindEl = document.getElementById("kind"), makeBtn = document.getElementById("makeBtn"),
+      out = document.getElementById("out"), err = document.getElementById("err"),
+      qrHere = document.getElementById("qrHere"), qrCard = document.getElementById("qrCard"),
+      dlBtn = document.getElementById("dlBtn"), printBtn = document.getElementById("printBtn"),
+      tentTitle = document.getElementById("tentTitle"), tentText = document.getElementById("tentText"),
+      tentBiz = document.getElementById("tentBiz");
+
+  function fail(msg) { err.textContent = msg; err.classList.add("show"); out.classList.remove("show"); }
+  function make() {
+    err.classList.remove("show");
+    var link = linkEl.value.trim();
+    if (!/^https?:\/\/\S+\.\S+/i.test(link)) { fail("That does not look like a complete link yet. It should start with https:// — copy the full link from your Google Business Profile and paste it here."); return; }
+    qrHere.innerHTML = ""; qrCard.innerHTML = "";
+    new QRCode(qrHere, { text: link, width: 220, height: 220, correctLevel: QRCode.CorrectLevel.M });
+    new QRCode(qrCard, { text: link, width: 150, height: 150, correctLevel: QRCode.CorrectLevel.M });
+    var kind = kindEl.value;
+    if (kind === "review") { tentTitle.textContent = "Enjoyed your visit?"; tentText.innerHTML = "Scan to leave us a Google review.<br>It takes less than a minute."; }
+    else if (kind === "booking") { tentTitle.textContent = "Book your next visit"; tentText.innerHTML = "Scan to book online in seconds.<br>No phone call needed."; }
+    else { tentTitle.textContent = "Scan to visit us online"; tentText.innerHTML = "Scan the code with your phone camera<br>to open the page instantly."; }
+    tentBiz.textContent = bizEl.value.trim();
+    out.classList.add("show");
+    out.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
+  makeBtn.addEventListener("click", make);
+  linkEl.addEventListener("keydown", function (e) { if (e.key === "Enter") make(); });
+  dlBtn.addEventListener("click", function () {
+    var canvas = qrHere.querySelector("canvas");
+    if (!canvas) return;
+    var a = document.createElement("a");
+    a.href = canvas.toDataURL("image/png");
+    a.download = "review-qr-code.png";
+    document.body.appendChild(a); a.click(); a.remove();
+  });
+  printBtn.addEventListener("click", function () { window.print(); });
+})();
+</script>
+</body>
+</html>
