@@ -71,6 +71,7 @@
         <p class="note" id="thinNote" style="display:none;margin:0 0 14px"></p>
         <div class="qa-list" id="qaList"></div>
         <p class="note">These are drafts — read them before publishing and adjust anything that does not sound like you. Answers are written only from the information provided; if a detail was not on your website, it is not in an answer.</p>
+        <div id="emailResult"></div>
       </div>
     </div>
 
@@ -138,6 +139,7 @@
       out = document.getElementById("out"), qaList = document.getElementById("qaList"),
       thinNote = document.getElementById("thinNote"), copyAll = document.getElementById("copyAll");
   var lastFaqs = [];
+  window.NonaEmailResult = { tool: "faq_generator", title: "Your starter frequently asked questions", getText: function () { return lastFaqs.map(function (f) { return f.q + "\n" + f.a; }).join("\n\n"); } };
 
   document.querySelectorAll("input[name='mode']").forEach(function (el) {
     el.addEventListener("change", function () {
@@ -196,5 +198,6 @@
   });
 })();
 </script>
+<script src="../email-result.js"></script>
 </body>
 </html>

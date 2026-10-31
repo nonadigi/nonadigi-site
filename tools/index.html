@@ -79,6 +79,15 @@
       <p>These tools are free to link to and free to share. Every tool lives on its own page, so you can link straight to the exact one your readers need. Useful tools get bookmarked, shared, and linked — that is how more people find them, and find us.</p>
       <div class="row"><a class="btn btn-ghost btn-sm" href="/tools/">See all tools</a></div>
     </div>
+    <div class="band" style="background:#fff;color:var(--ink);border:1px solid var(--line)">
+      <h2>One useful free tool in your inbox, each month</h2>
+      <p style="opacity:.75">We add new tools as we build them. Join the list and we will send you one genuinely useful free tool a month — no spam, no selling your address, unsubscribe any time.</p>
+      <form class="optin" id="optinForm" novalidate>
+        <input type="email" id="optinEmail" placeholder="you@example.com" autocomplete="email" aria-label="Email address">
+        <button class="btn btn-primary btn-sm" type="submit">Join the list</button>
+      </form>
+      <p class="optin-msg" id="optinMsg" style="display:none"></p>
+    </div>
     <div class="band sell">
       <h2>Here for your business?</h2>
       <p>The tools are free. What we sell is automation: an AI Chat Receptionist that answers your customers day and night, and an AI Visibility Engine that helps more of them find you in the first place.</p>
@@ -123,5 +132,28 @@
     </div>
   </div>
 </footer>
+<script>
+(function () {
+  var API = "https://ohwnsrwjdzigzceisker.supabase.co/functions/v1/tools-email";
+  var ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9od25zcndqZHppZ3pjZWlza2VyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTEyMzQzNDksImV4cCI6MjEwNjgxMDM0OX0.Lp_hcHPBRBCeJxCIIgpKpeUGTLSdhG3FrbDTkYSu2NA";
+  var form = document.getElementById("optinForm"), emailEl = document.getElementById("optinEmail"), msg = document.getElementById("optinMsg");
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var email = emailEl.value.trim();
+    msg.style.display = "";
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) { msg.textContent = "That email address does not look complete. Check it and try again."; msg.style.color = "#9c1032"; return; }
+    msg.textContent = "Joining…"; msg.style.color = "var(--muted)";
+    fetch(API, { method: "POST", headers: { "Content-Type": "application/json", "Authorization": "Bearer " + ANON }, body: JSON.stringify({ action: "subscribe", email: email }) })
+      .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
+      .then(function (res) {
+        if (!res.ok) throw new Error(res.j && res.j.error ? res.j.error : "Something went wrong. Please try again.");
+        form.style.display = "none";
+        msg.textContent = "You are on the list. One useful free tool, once a month — that is the whole deal.";
+        msg.style.color = "#067a57";
+      })
+      .catch(function (err) { msg.textContent = err.message || "Something went wrong. Please try again."; msg.style.color = "#9c1032"; });
+  });
+})();
+</script>
 </body>
 </html>

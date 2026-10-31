@@ -69,6 +69,7 @@
         <h3 style="font-size:19px;font-weight:800;margin-bottom:14px">Pick the reply that sounds most like you</h3>
         <div class="reply-list" id="replyList"></div>
         <p class="note">Read before you post, and personalize one detail if you can — a name, a dish, a service. For a negative review, the calmest reply usually wins: it is written for the hundred people who will read it later, not just the one who wrote the review.</p>
+        <div id="emailResult"></div>
       </div>
     </div>
 
@@ -134,6 +135,8 @@
       goBtn = document.getElementById("goBtn"), spinner = document.getElementById("spinner"),
       err = document.getElementById("err"), out = document.getElementById("out"),
       replyList = document.getElementById("replyList");
+  var lastReplies = [];
+  window.NonaEmailResult = { tool: "review_reply", title: "Your review reply options", getText: function () { return lastReplies.map(function (r, i) { return "Option " + (i + 1) + ":\n" + r; }).join("\n\n"); } };
 
   reviewEl.addEventListener("input", function () { countEl.textContent = reviewEl.value.length; });
   function fail(msg) { err.textContent = msg; err.classList.add("show"); }
@@ -151,8 +154,9 @@
       .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
       .then(function (res) {
         if (!res.ok) throw new Error(res.j && res.j.error ? res.j.error : "Something went wrong. Please try again.");
+        lastReplies = res.j.replies || [];
         replyList.innerHTML = "";
-        (res.j.replies || []).forEach(function (text, i) {
+        lastReplies.forEach(function (text, i) {
           var item = document.createElement("div"); item.className = "reply-item";
           var rh = document.createElement("div"); rh.className = "rh";
           var b = document.createElement("b"); b.textContent = "Option " + (i + 1);
@@ -170,5 +174,6 @@
   });
 })();
 </script>
+<script src="../email-result.js"></script>
 </body>
 </html>

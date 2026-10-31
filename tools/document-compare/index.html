@@ -74,6 +74,7 @@
       <div class="summary" id="summary"></div>
       <label class="only-changes" id="onlyWrap"><input type="checkbox" id="onlyChanges"> Show only the changes</label>
       <div class="diff" id="diff"></div>
+      <div id="emailResult" style="display:none"></div>
       <p class="note">A note on formats: this tool reads Word documents and plain text files, entirely inside your browser. PDF files cannot be read reliably without uploading them to a server, and we would rather keep your documents private — for a PDF, copy its text and paste it into the boxes instead.</p>
     </div>
 
@@ -246,11 +247,20 @@
     summary.classList.add("show");
     onlyWrap.classList.add("show");
     diffEl.classList.add("show");
+    document.getElementById("emailResult").style.display = "";
     diffEl.classList.toggle("hide-same", onlyChanges.checked);
     summary.scrollIntoView({ behavior: "smooth", block: "nearest" });
   });
   onlyChanges.addEventListener("change", function () { diffEl.classList.toggle("hide-same", onlyChanges.checked); });
+  window.NonaEmailResult = { tool: "document_compare", title: "Your document comparison — the changes", getText: function () {
+    var head = summary.textContent.replace(/\s+/g, " ").trim();
+    var changed = Array.prototype.map.call(diffEl.querySelectorAll(".row.add, .row.del"), function (r) { return r.textContent; });
+    var text = head + "\n\nChanged lines:\n" + changed.join("\n");
+    if (text.length > 3800) text = text.slice(0, 3800) + "\n… (the email copy is trimmed here — the full comparison is on the page)";
+    return text;
+  } };
 })();
 </script>
+<script src="../email-result.js"></script>
 </body>
 </html>

@@ -60,6 +60,7 @@
       </div>
       <p class="note">This is an estimate, not a promise: it assumes the callers you miss are worth the same as the customers you win, and it uses 4.33 weeks per month. Even the cautious settings surprise most owners. The fix is not working longer hours — it is making sure every caller and website visitor gets an instant, helpful answer, day or night.</p>
       <div class="actions"><a class="btn btn-primary" href="/ai-chat-receptionist/">See the fix: AI Chat Receptionist</a><a class="btn btn-ghost" href="/#audit">Get a free AI Visibility Audit</a></div>
+      <div id="emailResult"></div>
     </div>
 
     <div class="steps">
@@ -132,7 +133,14 @@
   [missed, value].forEach(function (el) { el.addEventListener("input", calc); });
   rate.addEventListener("change", calc);
   calc();
+  window.NonaEmailResult = { tool: "missed_lead_calculator", title: "Your missed-lead estimate", getText: function () {
+    return "With " + (missed.value || 0) + " missed calls or chats per week, an average value of $" + (value.value || 0) +
+      ", and " + rate.options[rate.selectedIndex].text + " of them booking, the estimate is:\n\n" +
+      "Per week: " + perWeek.textContent + "\nPer month: " + perMonth.textContent + "\nPer year: " + perYear.textContent +
+      "\n\nEstimate only, using 4.33 weeks per month. The fix is not longer hours — it is an instant, helpful answer for every caller and visitor, day or night: https://nonadigi.com/ai-chat-receptionist/";
+  } };
 })();
 </script>
+<script src="../email-result.js"></script>
 </body>
 </html>
