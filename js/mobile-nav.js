@@ -19,7 +19,17 @@
     setOpen(!nav.classList.contains("open"));
   });
   links.addEventListener("click", function (e) {
-    if (e.target.closest("a")) setOpen(false);
+    var a = e.target.closest("a");
+    if (!a) return;
+    var drop = a.parentElement && a.parentElement.classList.contains("has-drop") ? a.parentElement : null;
+    if (drop && window.matchMedia("(max-width: 920px)").matches) {
+      /* Mobile: the Products row folds/unfolds its sub-menu instead of navigating. */
+      e.preventDefault();
+      var open = drop.classList.toggle("sub-open");
+      a.textContent = a.textContent.replace(open ? "▾" : "▴", open ? "▴" : "▾");
+      return;
+    }
+    setOpen(false);
   });
   document.addEventListener("keydown", function (e) {
     if (e.key === "Escape") setOpen(false);

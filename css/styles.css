@@ -268,7 +268,9 @@
     .nav-links{display:none;position:absolute;top:100%;left:0;right:0;flex-direction:column;gap:0;background:#fffdf9;border-bottom:1px solid var(--line);box-shadow:0 24px 40px rgba(14,22,36,.13);padding:8px 22px 16px;font-size:16.5px;z-index:55}
     nav.open .nav-links{display:flex}
     .nav-links>a,.nav-links>.has-drop>a{display:block;padding:12px 2px;border-bottom:1px solid var(--line)}
-    .nav-drop{position:static;opacity:1;visibility:visible;transform:none;box-shadow:none;border:0;background:transparent;min-width:0;padding:2px 0 6px 16px}
+    .nav-drop{display:none;position:static;opacity:1;visibility:visible;transform:none;box-shadow:none;border:0;background:transparent;min-width:0;padding:2px 0 6px 16px}
+    .has-drop.sub-open .nav-drop{display:block}
+    .has-drop:hover .nav-drop,.has-drop:focus-within .nav-drop{transform:none}
     .nav-drop a{display:block;padding:8px 0;border-bottom:0}
     .nav-drop .soon{padding:8px 0}
     h1{font-size:42px}
